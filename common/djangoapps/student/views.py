@@ -599,6 +599,8 @@ def is_course_blocked(request, redeemed_registration_codes, course_key):
     return blocked
 
 
+from openedx.core.lib import profile_it
+@profile_it.log()
 @login_required
 @ensure_csrf_cookie
 def dashboard(request):
