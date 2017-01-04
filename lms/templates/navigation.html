@@ -70,45 +70,7 @@ site_status_msg = get_site_status_msg(course_id)
         <span class="course-name">${display_name}</span></h2>
       % endif
 
-<<<<<<< HEAD
-    % if UserProfile.has_registered(user):
-    <ol class="left nav-global authenticated">
-      <%block name="navigation_global_links_authenticated">
-        % if settings.FEATURES.get('COURSES_ARE_BROWSABLE'):
-          <li class="nav-global-01">
-            <a href="${marketing_link('COURSES')}">${_('Find Courses')}</a>
-          </li>
-        % endif
-        %if settings.FEATURES.get('ENABLE_SYSADMIN_DASHBOARD','') and user.is_staff:
-          <li>
-            ## Translators: This is short for "System administration".
-            <a href="${reverse('sysadmin')}">${_("Sysadmin")}</a>
-          </li>
-        %endif
-      </%block>
-    </ol>
-    <ol class="user">
-        % if static.show_language_selector():
-        <% languages = released_languages() %>
-        % if len(languages) > 1:
-            <li class="primary">
-              <form action="/i18n/setlang/" method="post" class="settings-language-form" id="language-settings-form">
-                <input type="hidden" id="csrf_token" name="csrfmiddlewaretoken" value="${csrf_token}">
-                <input title="preference api" type="hidden" id="preference-api-url" value="${reverse('preferences_api', kwargs={'username': user.username})}">
-                <label><span class="sr">${_("Choose Language")}</span>
-                    <select class="input select" id="settings-language-value" name="language">
-                      % for language in languages:
-                        % if language[0] == LANGUAGE_CODE:
-                          <option value="${language[0]}" selected="selected">${language[1]}</option>
-                        % else:
-                          <option value="${language[0]}" >${language[1]}</option>
-                        % endif
-                      % endfor
-                    </select>
-                </label>
-              </form>
-=======
-      % if user.is_authenticated():
+      % if UserProfile.has_registered(user):
         <ol class="left nav-global list-inline authenticated">
         <%block name="navigation_global_links_authenticated">
           % if settings.FEATURES.get('COURSES_ARE_BROWSABLE') and not show_program_listing:
@@ -126,7 +88,6 @@ site_status_msg = get_site_status_msg(course_id)
               <a class="${'active ' if reverse('program_listing_view') in request.path else ''}tab-nav-link" href="${reverse('program_listing_view')}">
                 ${_("Programs")}
               </a>
->>>>>>> 90707afa503dfba74c592f88ce43c01d12c76142
             </li>
           % endif
           %if settings.FEATURES.get('ENABLE_SYSADMIN_DASHBOARD','') and user.is_staff:
@@ -171,13 +132,8 @@ site_status_msg = get_site_status_msg(course_id)
           % endif
         </%block>
 
-<<<<<<< HEAD
-      <%block name="navigation_other_global_links">
-        % if not settings.DISABLE_REGISTER_BUTTON:
-=======
         <%block name="navigation_other_global_links">
-          % if not settings.FEATURES['DISABLE_LOGIN_BUTTON']:
->>>>>>> 90707afa503dfba74c592f88ce43c01d12c76142
+          % if not settings.DISABLE_REGISTER_BUTTON:
             % if settings.FEATURES.get('ENABLE_COURSE_DISCOVERY'):
               <li class="item nav-global-05">
                 <a class="btn" href="/courses">${_("Explore Courses")}</a>

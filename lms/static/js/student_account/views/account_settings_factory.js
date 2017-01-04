@@ -16,17 +16,14 @@
             userAccountsApiUrl,
             userPreferencesApiUrl,
             accountUserId,
-            platformName
+            platformName,
+            isShibAuth
         ) {
             var accountSettingsElement, userAccountModel, userPreferencesModel, aboutSectionsData,
                 accountsSectionData, ordersSectionData, accountSettingsView, showAccountSettingsPage,
                 showLoadingError, orderNumber, getUserField, userFields, timeZoneDropdownField, countryDropdownField;
 
-<<<<<<< HEAD
-        return function (fieldsData, authData, userAccountsApiUrl, userPreferencesApiUrl, accountUserId, platformName, isShibAuth) {
-=======
             accountSettingsElement = $('.wrapper-account-settings');
->>>>>>> 90707afa503dfba74c592f88ce43c01d12c76142
 
             userAccountModel = new UserAccountModel();
             userAccountModel.url = userAccountsApiUrl;
@@ -34,16 +31,10 @@
             userPreferencesModel = new UserPreferencesModel();
             userPreferencesModel.url = userPreferencesApiUrl;
 
-<<<<<<< HEAD
-            var sectionsData = [
-                {
-                    title: gettext('Basic Account Information (required)'),
-=======
             aboutSectionsData = [
                 {
                     title: gettext('Basic Account Information'),
                     subtitle: gettext('These settings include basic information about your account. You can also specify additional information and see your linked social accounts on this page.'),  // eslint-disable-line max-len
->>>>>>> 90707afa503dfba74c592f88ce43c01d12c76142
                     fields: [
                         {
                             view: new AccountSettingsFieldViews.ReadonlyFieldView({
@@ -55,87 +46,7 @@
                                     {platform_name: platformName}
                                 )
                             })
-                        },
-<<<<<<< HEAD
-=======
-                        {
-                            view: new AccountSettingsFieldViews.TextFieldView({
-                                model: userAccountModel,
-                                title: gettext('Full Name'),
-                                valueAttribute: 'name',
-                                helpMessage: gettext(
-                                    'The name that is used for ID verification and appears on your certificates. Other learners never see your full name. Make sure to enter your name exactly as it appears on your government-issued photo ID, including any non-Roman characters.'  // eslint-disable-line max-len
-                                ),
-                                persistChanges: true
-                            })
-                        },
-                        {
-                            view: new AccountSettingsFieldViews.EmailFieldView({
-                                model: userAccountModel,
-                                title: gettext('Email Address'),
-                                valueAttribute: 'email',
-                                helpMessage: StringUtils.interpolate(
-                                    gettext('The email address you use to sign in. Communications from {platform_name} and your courses are sent to this address.'),  // eslint-disable-line max-len
-                                    {platform_name: platformName}
-                                ),
-                                persistChanges: true
-                            })
-                        },
-                        {
-                            view: new AccountSettingsFieldViews.PasswordFieldView({
-                                model: userAccountModel,
-                                title: gettext('Password'),
-                                screenReaderTitle: gettext('Reset Your Password'),
-                                valueAttribute: 'password',
-                                emailAttribute: 'email',
-                                linkTitle: gettext('Reset Your Password'),
-                                linkHref: fieldsData.password.url,
-                                helpMessage: StringUtils.interpolate(
-                                    gettext('When you select "Reset Your Password", a message will be sent to the email address for your {platform_name} account. Click the link in the message to reset your password.'),  // eslint-disable-line max-len
-                                    {platform_name: platformName}
-                                )
-                            })
-                        },
-                        {
-                            view: new AccountSettingsFieldViews.LanguagePreferenceFieldView({
-                                model: userPreferencesModel,
-                                title: gettext('Language'),
-                                valueAttribute: 'pref-lang',
-                                required: true,
-                                refreshPageOnSave: true,
-                                helpMessage: StringUtils.interpolate(
-                                    gettext('The language used throughout this site. This site is currently available in a limited number of languages.'),  // eslint-disable-line max-len
-                                    {platform_name: platformName}
-                                ),
-                                options: fieldsData.language.options,
-                                persistChanges: true
-                            })
-                        },
-                        {
-                            view: new AccountSettingsFieldViews.DropdownFieldView({
-                                model: userAccountModel,
-                                required: true,
-                                title: gettext('Country or Region'),
-                                valueAttribute: 'country',
-                                options: fieldsData.country.options,
-                                persistChanges: true
-                            })
-                        },
-                        {
-                            view: new AccountSettingsFieldViews.TimeZoneFieldView({
-                                model: userPreferencesModel,
-                                required: true,
-                                title: gettext('Time Zone'),
-                                valueAttribute: 'time_zone',
-                                helpMessage: gettext('Select the time zone for displaying course dates. If you do not specify a time zone, course dates, including assignment deadlines, will be displayed in your browser\'s local time zone.'), // eslint-disable-line max-len
-                                groupOptions: [{
-                                    groupTitle: gettext('All Time Zones'),
-                                    selectOptions: fieldsData.time_zone.options
-                                }],
-                                persistChanges: true
-                            })
                         }
->>>>>>> 90707afa503dfba74c592f88ce43c01d12c76142
                     ]
                 },
                 {
@@ -181,15 +92,16 @@
                 }
             ];
 
-<<<<<<< HEAD
             if (!isShibAuth) {
-                sectionsData[0].fields.push(
+                aboutSectionsData[0].fields.push(
                     {
-                        view: new FieldViews.TextFieldView({
+                        view: new AccountSettingsFieldViews.TextFieldView({
                             model: userAccountModel,
                             title: gettext('Full Name'),
                             valueAttribute: 'name',
-                            helpMessage: gettext('The name that appears on your Statements of Accomplishment. Other learners never see your full name.'),
+                            helpMessage: gettext(
+                                'The name that appears on your Statements of Accomplishment. Other learners never see your full name.'  // eslint-disable-line max-len
+                            ),
                             persistChanges: true
                         })
                     },
@@ -198,8 +110,9 @@
                             model: userAccountModel,
                             title: gettext('Email Address'),
                             valueAttribute: 'email',
-                            helpMessage: interpolate_text(
-                                gettext('The email address you use to sign in. Communications from {platform_name} and your courses are sent to this address.'), {platform_name: platformName}
+                            helpMessage: StringUtils.interpolate(
+                                gettext('The email address you use to sign in. Communications from {platform_name} and your courses are sent to this address.'),  // eslint-disable-line max-len
+                                {platform_name: platformName}
                             ),
                             persistChanges: true
                         })
@@ -208,33 +121,39 @@
                         view: new AccountSettingsFieldViews.PasswordFieldView({
                             model: userAccountModel,
                             title: gettext('Password'),
-                            screenReaderTitle: gettext('Reset your Password'),
+                            screenReaderTitle: gettext('Reset Your Password'),
                             valueAttribute: 'password',
                             emailAttribute: 'email',
-                            linkTitle: gettext('Reset Password'),
+                            linkTitle: gettext('Reset Your Password'),
                             linkHref: fieldsData.password.url,
-                            helpMessage: gettext('When you click "Reset Password", a message will be sent to your email address. Click the link in the message to reset your password.')
+                            helpMessage: StringUtils.interpolate(
+                                gettext('When you select "Reset Your Password", a message will be sent to the email address for your {platform_name} account. Click the link in the message to reset your password.'),  // eslint-disable-line max-len
+                                {platform_name: platformName}
+                            )
                         })
                     }
                 )
             } else {
-                sectionsData[0].fields.push(
+                aboutSectionsData[0].fields.push(
                     {
-                        view: new FieldViews.ReadonlyFieldView({
+                        view: new AccountSettingsFieldViews.ReadonlyFieldView({
                             model: userAccountModel,
                             title: gettext('Full Name'),
                             valueAttribute: 'name',
-                            helpMessage: gettext('The name that appears on your Statements of Accomplishment. Other learners never see your full name.'),
+                            helpMessage: gettext(
+                                'The name that appears on your Statements of Accomplishment. Other learners never see your full name.'  // eslint-disable-line max-len
+                            ),
                             persistChanges: true
                         })
                     },
                     {
-                        view: new FieldViews.ReadonlyFieldView({
+                        view: new AccountSettingsFieldViews.ReadonlyFieldView({
                             model: userAccountModel,
                             title: gettext('Email Address'),
                             valueAttribute: 'email',
-                            helpMessage: interpolate_text(
-                                gettext('The email address you use to sign in. Communications from {platform_name} and your courses are sent to this address.'), {platform_name: platformName}
+                            helpMessage: StringUtils.interpolate(
+                                gettext('The email address you use to sign in. Communications from {platform_name} and your courses are sent to this address.'),  // eslint-disable-line max-len
+                                {platform_name: platformName}
                             ),
                             persistChanges: true
                         })
@@ -242,7 +161,7 @@
                 )
             }
 
-            sectionsData[0].fields.push(
+            aboutSectionsData[0].fields.push(
                 {
                     view: new AccountSettingsFieldViews.LanguagePreferenceFieldView({
                         model: userPreferencesModel,
@@ -250,29 +169,40 @@
                         valueAttribute: 'pref-lang',
                         required: true,
                         refreshPageOnSave: true,
-                        helpMessage: interpolate_text(
-                            gettext('The language used throughout this site. This site is currently available in a limited number of languages.'), {platform_name: platformName}
+                        helpMessage: StringUtils.interpolate(
+                            gettext('The language used throughout this site. This site is currently available in a limited number of languages.'),  // eslint-disable-line max-len
+                            {platform_name: platformName}
                         ),
                         options: fieldsData.language.options,
                         persistChanges: true
                     })
                 },
                 {
-                    view: new FieldViews.DropdownFieldView({
+                    view: new AccountSettingsFieldViews.DropdownFieldView({
                         model: userAccountModel,
                         required: true,
                         title: gettext('Country or Region'),
                         valueAttribute: 'country',
-                        options: fieldsData['country']['options'],
+                        options: fieldsData.country.options,
+                        persistChanges: true
+                    })
+                },
+                {
+                    view: new AccountSettingsFieldViews.TimeZoneFieldView({
+                        model: userPreferencesModel,
+                        required: true,
+                        title: gettext('Time Zone'),
+                        valueAttribute: 'time_zone',
+                        helpMessage: gettext('Select the time zone for displaying course dates. If you do not specify a time zone, course dates, including assignment deadlines, will be displayed in your browser\'s local time zone.'), // eslint-disable-line max-len
+                        groupOptions: [{
+                            groupTitle: gettext('All Time Zones'),
+                            selectOptions: fieldsData.time_zone.options
+                        }],
                         persistChanges: true
                     })
                 }
             )
 
-            if (_.isArray(authData.providers)) {
-                var accountsSectionData = {
-                    title: gettext('Connected Accounts'),
-=======
             // set TimeZoneField to listen to CountryField
             getUserField = function(list, search) {
                 return _.find(list, function(field) {
@@ -293,7 +223,6 @@
                         gettext('You can link your social media accounts to simplify signing in to {platform_name}.'),
                         {platform_name: platformName}
                     ),
->>>>>>> 90707afa503dfba74c592f88ce43c01d12c76142
                     fields: _.map(authData.providers, function(provider) {
                         return {
                             'view': new AccountSettingsFieldViews.AuthFieldView({

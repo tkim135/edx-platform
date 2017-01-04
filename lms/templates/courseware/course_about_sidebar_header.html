@@ -9,6 +9,9 @@ from django.conf import settings
   % if static.get_value('course_about_show_social_links', True):
   <div class="social-sharing">
     <div class="sharing-message">${_("Share with friends and family!")}</div>
+    % if self.course_about_social_sharing_file:
+      <%include file="${self.course_about_social_sharing_file}" />
+    % else:
     ## TODO: this should probably be an overrideable block,
     ##       or something allowing themes to do whatever they
     ##       want here (and on this whole page, really).
@@ -53,6 +56,7 @@ from django.conf import settings
       <a href="${email_subject}" class="share">
         <span class="icon fa fa-envelope" aria-hidden="true"></span><span class="sr">${_("Email someone to say you've enrolled in this course")}</span>
       </a>
+  % endif
   </div>
   % endif
 </header>

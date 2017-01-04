@@ -13,14 +13,8 @@ from celery.states import READY_STATES
 
 from xmodule.modulestore.django import modulestore
 
-<<<<<<< HEAD
-from instructor_email_widget.models import GroupedQuery
-from instructor_task.models import InstructorTask
-from instructor_task.tasks import (
-=======
 from lms.djangoapps.instructor_task.models import InstructorTask
 from lms.djangoapps.instructor_task.tasks import (
->>>>>>> 90707afa503dfba74c592f88ce43c01d12c76142
     rescore_problem,
     reset_problem_attempts,
     delete_problem_state,
@@ -294,13 +288,6 @@ def submit_bulk_course_email(request, course_key, email_id):
     # We also pull out the targets argument here, so that is displayed in
     # the InstructorTask status.
     email_obj = CourseEmail.objects.get(id=email_id)
-<<<<<<< HEAD
-    to_option = email_obj.to_option
-    if to_option.isdigit():
-        # Use human-readable title instead of query id
-        query = GroupedQuery.objects.get(id=int(to_option))
-        to_option = query.title or u'Query saved at ' + query.created.strftime("%m-%d-%y %H:%M")
-=======
     # task_input has a limit to the size it can store, so any target_type with count > 1 is combined and counted
     targets = Counter([target.target_type for target in email_obj.targets.all()])
     targets = [
@@ -308,7 +295,6 @@ def submit_bulk_course_email(request, course_key, email_id):
         "{} {}".format(count, target)
         for target, count in targets.iteritems()
     ]
->>>>>>> 90707afa503dfba74c592f88ce43c01d12c76142
 
     task_type = 'bulk_course_email'
     task_class = send_bulk_course_email
