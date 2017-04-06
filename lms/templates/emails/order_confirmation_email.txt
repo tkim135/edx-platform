@@ -1,12 +1,15 @@
 <%! from django.utils.translation import ugettext as _ %>
-${_("Hi {name},").format(name=order.user.profile.name)}
+${_("Hi {recipient_name},").format(recipient_name=recipient_name)}
 
 ${_("Your payment was successful. You will see the charge below on your next credit or debit card statement under the company name {merchant_name}.").format(merchant_name=settings.CC_MERCHANT_NAME)}
 
+${_("You can access your course from your online learning dashboard at: {dashboard_url}").format(dashboard_url=dashboard_url)}
 % if marketing_link('FAQ'):
 ${_("If you have billing questions, please read the FAQ ({faq_url}) or contact {billing_email}.").format(billing_email=payment_support_email, faq_url=marketing_link('FAQ'))}
 % else:
-${_("If you have billing questions, please contact {billing_email}.").format(billing_email=payment_support_email)}
+${_("If you have any questions, please contact us by email or phone {payment_support_phone}").format(
+        payment_support_phone=payment_support_phone
+    )}
 % endif
 
 ${_("Thank you,")}
@@ -14,7 +17,10 @@ ${_("Thank you,")}
 % if payment_email_signature:
 ${payment_email_signature}
 % else:
-${_("The {platform_name} Team").format(platform_name=platform_name)}
+${_("Your {payment_platform_name} Team {billing_email}").format(
+        payment_platform_name=payment_platform_name, 
+        billing_email=payment_support_email
+    )}
 % endif
 
 

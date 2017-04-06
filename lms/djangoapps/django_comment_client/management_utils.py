@@ -12,7 +12,7 @@ MONGO_PARAMS = settings.FORUM_MONGO_PARAMS
 
 def get_mongo_connection_string():
     """
-    Creates the a URI which contains the appropriate credentials needed to access MongoDB using MongoClient
+    Creates a URI which contains the appropriate credentials needed to access MongoDB using MongoClient
     :return: a string representing the URI which can be used to create a MongoClient instance.
     """
     credentials = ''
@@ -26,10 +26,18 @@ def get_mongo_connection_string():
                 user=MONGO_PARAMS['user'],
                 password=MONGO_PARAMS['password'],
             )
-    connection_string = "mongodb://" + credentials + "{host}:{port}/{database}".format(
-        host=MONGO_PARAMS['host'],
-        port=MONGO_PARAMS['port'],
+    hosts = [
+        "{host}:{port}".format(
+            host=host['host'],
+            port=host['port'],
+        )
+        for host in MONGO_PARAMS['hosts']
+    ]
+    hosts = ','.join(hosts)
+    connection_string = "mongodb://{credentials}{hosts}/{database}".format(
+        credentials=credentials,
         database=MONGO_PARAMS['database'],
+        hosts=hosts,
     )
     return connection_string
 

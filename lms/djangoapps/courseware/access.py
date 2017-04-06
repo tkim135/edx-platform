@@ -513,6 +513,7 @@ NONREGISTERED_CATEGORY_WHITELIST = [
     "hidden",
     "image",
     "imagemodal",
+    "invideoquiz",
     "problemset",
     "randomize",
     "raw",

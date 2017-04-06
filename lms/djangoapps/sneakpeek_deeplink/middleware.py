@@ -2,6 +2,8 @@
 Middleware class that supports deep-links for allows courses that allow sneakpeek.
 The user will be registered anonymously, logged in, and enrolled in the course
 """
+import logging
+
 from django.core.urlresolvers import resolve
 from django.http import Http404
 
@@ -9,6 +11,7 @@ from student.models import CourseEnrollment
 from util.request import course_id_from_url
 from courseware.models import CoursePreference
 from student.views import _create_and_login_nonregistered_user, _check_can_enroll_in_course
+from xmodule.modulestore.django import modulestore
 
 DISALLOW_SNEAKPEEK_URL_NAMES = (
     'lti_rest_endpoints',
@@ -18,6 +21,8 @@ DISALLOW_SNEAKPEEK_URL_NAMES = (
     'course_root',
     'info',
 )
+
+LOG = logging.getLogger('edx.sneakpeek_middleware')
 
 
 class SneakPeekDeepLinkMiddleware(object):
@@ -58,6 +63,11 @@ class SneakPeekDeepLinkMiddleware(object):
             return None
 
         if not CoursePreference.course_allows_nonregistered_access(course_id):
+            return None
+
+        if not modulestore().has_course(course_id):
+            message = u"Sneakpeek attempt for non-existent course %s"
+            LOG.warning(message, course_id)
             return None
 
         can_enroll, _ = _check_can_enroll_in_course(

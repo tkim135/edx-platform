@@ -407,6 +407,7 @@ class CourseDetailsViewTest(CourseTestCase, MilestonesTestCaseMixin):
             self.assertContains(response, "Course Banner Image")
             self.assertContains(response, "Course Video Thumbnail Image")
 
+
 @ddt.ddt
 class CourseGradingTest(CourseTestCase):
     """

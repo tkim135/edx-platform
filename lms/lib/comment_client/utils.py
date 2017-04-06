@@ -114,10 +114,18 @@ def perform_request(method, url, data_or_params=None, raw=False,
             try:
                 data = response.json()
             except ValueError:
+                message = (
+                    u"Comments service returned invalid JSON "
+                    "for request {request_id} at url {url} "
+                    "with HTTP status code {status_code}; "
+                    "first 100 characters: '{content}'"
+                )
                 raise CommentClientError(
-                    u"Invalid JSON response for request {request_id}; first 100 characters: '{content}'".format(
+                    message.format(
                         request_id=request_id,
-                        content=response.text[:100]
+                        url=response.url,
+                        status_code=response.status_code,
+                        content=response.text[:100],
                     )
                 )
             if paged_results:

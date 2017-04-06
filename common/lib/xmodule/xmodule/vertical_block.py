@@ -69,8 +69,8 @@ class VerticalBlock(SequenceFields, XModuleFields, StudioEditableBlock, XmlParse
             'xblock_context': context,
             'unit_title': self.display_name_with_default if not is_child_of_vertical else None,
             'show_bookmark_button': not is_child_of_vertical,
-            'bookmarked': child_context['bookmarked'],
-            'bookmark_id': u"{},{}".format(child_context['username'], unicode(self.location))
+            'bookmarked': child_context.get('bookmarked', False),
+            'bookmark_id': "{},{}".format(child_context.get('username', ''), unicode(self.location))
         }))
 
         fragment.add_javascript_url(self.runtime.local_resource_url(self, 'public/js/vertical_student_view.js'))

@@ -1397,14 +1397,14 @@ def login_user(request, error=""):  # pylint: disable=too-many-statements,unused
     user_found_by_email_lookup = user
     if user_found_by_email_lookup and LoginFailures.is_feature_enabled():
         if LoginFailures.is_user_locked_out(user_found_by_email_lookup):
-            lockout_message = ungettext(
-                    "This account has been temporarily locked due to excessive login failures. "
-                    "Try again in {minutes} minute.  For security reasons, "
-                    "resetting the password will NOT lift the lockout. Please wait for {minutes} minute.",
-                    "This account has been temporarily locked due to excessive login failures. "
-                    "Try again in {minutes} minutes.  For security reasons, "
-                    "resetting the password will NOT lift the lockout. Please wait for {minutes} minutes.",
-                    LOGIN_LOCKOUT_PERIOD_PLUS_FIVE_MINUTES
+            lockout_message = ngettext(
+                "This account has been temporarily locked due to excessive login failures. "
+                "Try again in {minutes} minute.  For security reasons, "
+                "resetting the password will NOT lift the lockout. Please wait for {minutes} minute.",
+                "This account has been temporarily locked due to excessive login failures. "
+                "Try again in {minutes} minutes.  For security reasons, "
+                "resetting the password will NOT lift the lockout. Please wait for {minutes} minutes.",
+                LOGIN_LOCKOUT_PERIOD_PLUS_FIVE_MINUTES
             ).format(
                 minutes=LOGIN_LOCKOUT_PERIOD_PLUS_FIVE_MINUTES,
             )
@@ -2490,7 +2490,8 @@ def password_reset_confirm_wrapper(request, uidb36=None, token=None):
         if updated_user.password != old_password_hash:
             entry = PasswordHistory()
             entry.create(updated_user)
-
+            updated_user.backend = 'django.contrib.auth.backends.ModelBackend'
+            login(request, updated_user)
     else:
         response = password_reset_confirm(
             request, uidb64=uidb64, token=token, extra_context=platform_name

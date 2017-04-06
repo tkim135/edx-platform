@@ -1,6 +1,8 @@
 from cms.envs.common import *
 from openedx.stanford.lms.envs.common import (
+    COURSE_MODE_DEFAULTS,
     DEFAULT_COURSE_ABOUT_IMAGE_URL,
+    EXTRA_MIMETYPES,
     INSTRUCTOR_QUERY_PROBLEM_TYPES,
 )
 
@@ -46,4 +48,5 @@ MIDDLEWARE_CLASSES += (
 )
 SHIB_ONLY_SITE = False
 SHIB_REDIRECT_DOMAIN_WHITELIST = {}
+SPLIT_STUDIO_HOME = False
 XBLOCKS_ALWAYS_IN_STUDIO = []

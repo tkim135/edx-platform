@@ -160,6 +160,10 @@ p.unauth-warning a {
     img {
       height: 30px;
     }
+    
+    a {
+        line-height: 1em;
+    }
   }
 
   .nav-main,
@@ -169,7 +173,6 @@ p.unauth-warning a {
 
   h2 {
     display: block;
-    width: 65%;
     @include float(left);
     font-size: 0.9em;
     font-weight: 600;

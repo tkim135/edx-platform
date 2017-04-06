@@ -63,6 +63,14 @@ class SneakPeekDeeplinkMiddlewareTests(ModuleStoreTestCase):
             enrollment_start=now - month2,
             enrollment_end=now - month)
         self.closed_course.save()
+        self.course_to_delete = CourseFactory.create(
+            org='deleted',
+            number='course',
+            run='run',
+            enrollment_start=now - month,
+            enrollment_end=now + month,
+        )
+        self.course_to_delete.save()
         CoursePreference(
             course_id=self.open_course.id,
             pref_key="allow_nonregistered_access",
@@ -72,6 +80,11 @@ class SneakPeekDeeplinkMiddlewareTests(ModuleStoreTestCase):
             course_id=self.closed_course.id,
             pref_key="allow_nonregistered_access",
             pref_value="true",
+        ).save()
+        CoursePreference(
+            course_id=self.course_to_delete.id,
+            pref_key='allow_nonregistered_access',
+            pref_value='true',
         ).save()
 
     def make_successful_sneakpeek_login_request(self):
@@ -143,3 +156,19 @@ class SneakPeekDeeplinkMiddlewareTests(ModuleStoreTestCase):
         req.path = '/courses/closed/course/run/info'
         self.assertIsNone(self.middleware.process_request(req))
         self.assertNoSneakPeek(req, self.closed_course)
+
+    def test_deleted_course_with_preferences(self):
+        """
+        Verify that Sneakpeek requests fail after deleting a course
+        """
+        request = self.make_successful_sneakpeek_login_request()
+        request.path = '/courses/deleted/course/run/courseware'
+        self.assertIsNone(self.middleware.process_request(request))
+        self.assertSuccessfulSneakPeek(request, self.course_to_delete)
+        self.store.delete_course(self.course_to_delete.id, self.user)
+        request = self.make_successful_sneakpeek_login_request()
+        request.path = '/courses/deleted/course/run/courseware'
+        self.assertIsNone(self.middleware.process_request(request))
+        self.assertFalse(request.user.is_authenticated())
+        count = CourseEnrollment.objects.filter(course_id=self.course_to_delete.id).count()
+        self.assertEquals(1, count)
