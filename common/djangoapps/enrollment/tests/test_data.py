@@ -2,14 +2,17 @@
 Test the Data Aggregation Layer for Course Enrollments.
 
 """
+import datetime
+import unittest
+
 import ddt
 from mock import patch
 from nose.tools import raises
-import unittest
-
+from pytz import UTC
 from django.conf import settings
-from xmodule.modulestore.tests.django_utils import ModuleStoreTestCase
-from xmodule.modulestore.tests.factories import CourseFactory
+
+from course_modes.models import CourseMode
+from enrollment import data
 from enrollment.errors import (
     UserNotFoundError, CourseEnrollmentClosedError,
     CourseEnrollmentFullError, CourseEnrollmentExistsError,
@@ -17,9 +20,9 @@ from enrollment.errors import (
 from openedx.core.lib.exceptions import CourseNotFoundError
 from student.tests.factories import UserFactory, CourseModeFactory
 from student.models import CourseEnrollment, EnrollmentClosedError, CourseFullError, AlreadyEnrolledError
-from enrollment import data
-from student.roles import CourseStaffRole
-from student.tests.factories import UserProfileFactory
+from xmodule.modulestore.tests.django_utils import ModuleStoreTestCase
+from xmodule.modulestore.tests.factories import CourseFactory
+
 
 @ddt.ddt
 @unittest.skipUnless(settings.ROOT_URLCONF == 'lms.urls', 'Test only valid in lms')
@@ -241,13 +244,13 @@ class EnrollmentDataTest(ModuleStoreTestCase):
 
     @raises(CourseEnrollmentFullError)
     @patch.object(CourseEnrollment, "enroll")
-    def test_enrollment_for_closed_course(self, mock_enroll):
+    def test_enrollment_for_full_course(self, mock_enroll):
         mock_enroll.side_effect = CourseFullError("Bad things happened")
         data.create_course_enrollment(self.user.username, unicode(self.course.id), 'honor', True)
 
     @raises(CourseEnrollmentExistsError)
     @patch.object(CourseEnrollment, "enroll")
-    def test_enrollment_for_closed_course(self, mock_enroll):
+    def test_enrollment_for_enrolled_course(self, mock_enroll):
         mock_enroll.side_effect = AlreadyEnrolledError("Bad things happened")
         data.create_course_enrollment(self.user.username, unicode(self.course.id), 'honor', True)
 
@@ -259,57 +262,33 @@ class EnrollmentDataTest(ModuleStoreTestCase):
         enrollment = data.update_course_enrollment(self.user.username, "some/fake/course", is_active=False)
         self.assertIsNone(enrollment)
 
+    def test_get_course_with_expired_mode_included(self):
+        """Verify that method returns expired modes if include_expired
+        is true."""
+        modes = ['honor', 'verified', 'audit']
+        self._create_course_modes(modes, course=self.course)
+        self._update_verified_mode_as_expired(self.course.id)
+        self.assert_enrollment_modes(modes, True)
 
-@unittest.skipUnless(settings.ROOT_URLCONF == 'lms.urls', 'Test only valid in lms')
-class RosterDataTest(ModuleStoreTestCase):
-    """
-    Test course roster data aggregation api.
-    """
-    STUDENT_USERNAME = 'aBob'
-    STUDENT_NAME = 'Bob Student'
-    STUDENT_EMAIL = 'bob@example.com'
-    STUDENT_PASSWORD = 'edx'
-    STAFF_USERNAME = 'zJoe'
-    STAFF_NAME = 'Joe Staff'
-    STAFF_EMAIL = 'joe@example.com'
-    STAFF_PASSWORD = 'edx'
+    def test_get_course_without_expired_mode_included(self):
+        """Verify that method does not returns expired modes if include_expired
+        is false."""
+        self._create_course_modes(['honor', 'verified', 'audit'], course=self.course)
+        self._update_verified_mode_as_expired(self.course.id)
+        self.assert_enrollment_modes(['audit', 'honor'], False)
 
-    def setUp(self):
-        """
-        Create a course, and enroll a student user and staff user.
-        """
-        super(RosterDataTest, self).setUp()
-        self.course = CourseFactory.create()
-        self.course_key = self.course.id
+    def _update_verified_mode_as_expired(self, course_id):
+        """Dry method to change verified mode expiration."""
+        mode = CourseMode.objects.get(course_id=course_id, mode_slug=CourseMode.VERIFIED)
+        mode.expiration_datetime = datetime.datetime(year=1970, month=1, day=1, tzinfo=UTC)
+        mode.save()
 
-        self.student = UserFactory.build(
-            username=self.STUDENT_USERNAME,
-            email=self.STUDENT_EMAIL,
-            password=self.STUDENT_PASSWORD,
-        )
-        self.student.save()
-        UserProfileFactory.create(user=self.student, name=self.STUDENT_NAME)
+    def assert_enrollment_modes(self, expected_modes, include_expired):
+        """Get enrollment data and assert response with expected modes."""
+        result_course = data.get_course_enrollment_info(unicode(self.course.id), include_expired=include_expired)
+        result_slugs = [mode['slug'] for mode in result_course['course_modes']]
+        for course_mode in expected_modes:
+            self.assertIn(course_mode, result_slugs)
 
-        self.staff = UserFactory.build(
-            username=self.STAFF_USERNAME,
-            email=self.STAFF_EMAIL,
-            password=self.STAFF_PASSWORD,
-        )
-        self.staff.save()
-        UserProfileFactory.create(user=self.staff, name=self.STAFF_NAME)
-
-        CourseEnrollment.enroll(self.student, self.course_key, mode="honor")
-        CourseEnrollment.enroll(self.staff, self.course_key, mode="honor")
-        CourseStaffRole(self.course_key).add_users(self.staff)
-
-    def test_roster(self):
-
-        roster = data.get_roster(unicode(self.course_key))
-        self.assertEquals(roster[0]['username'], self.STUDENT_USERNAME)
-        self.assertEquals(roster[0]['name'], self.STUDENT_NAME)
-        self.assertEquals(roster[0]['email'], self.STUDENT_EMAIL)
-        self.assertEquals(roster[0]['is_staff'], 0)
-        self.assertEquals(roster[1]['username'], self.STAFF_USERNAME)
-        self.assertEquals(roster[1]['name'], self.STAFF_NAME)
-        self.assertEquals(roster[1]['email'], self.STAFF_EMAIL)
-        self.assertEquals(roster[1]['is_staff'], 1)
+        if not include_expired:
+            self.assertNotIn('verified', result_slugs)
