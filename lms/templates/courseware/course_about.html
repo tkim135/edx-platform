@@ -276,7 +276,7 @@ from openedx.core.lib.courses import course_image_url
           % endif
             ## We plan to ditch end_date (which is not stored in course metadata),
             ## but for backwards compatibility, show about/end_date blob if it exists.
-            % if get_course_about_section(request, course, "end_date") or course.end:
+            % if course.end:
                 <%
                     course_end_date = course.end
                 %>
