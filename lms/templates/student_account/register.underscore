@@ -80,3 +80,95 @@
     </div>
     <button class="nav-btn form-toggle" data-type="login"><%- gettext("Sign in") %></button>
 </div>
+
+  <script type="text/javascript">
+    $(function displayLogicUnderscore() {
+
+      var view_name = 'view-register';
+
+      // adding js class for styling with accessibility in mind
+      $('body').addClass('js').addClass(view_name);
+
+      // new window/tab opening
+      $('a[rel="external"], a[class="new-vp"]').click( function() {
+        window.open( $(this).attr('href') );
+        return false;
+      });
+
+//---------------------------------------- Client side registration behavior ----------------------------------------//
+
+      // form field label styling on focus
+      $("form :input").focus(function() {
+        $("label[for='" + this.id + "']").parent().addClass("is-focused");
+      }).blur(function() {
+        $("label").parent().removeClass("is-focused");
+      });
+
+      // display dependent form sections
+
+      $('select.affiliation-controller').change(function() {
+        $(this).siblings('.affiliation-controlled').slideUp('fast');
+
+        if ($(this).children("option:selected").val() === 'Stanford University') {
+          $(this).siblings('.affiliation-controlled#sunet_id_container, .affiliation-controlled#stanford_department_container').slideDown('fast');
+        } else if ($(this).children("option:selected").val() === "Packard Children's Health Alliance (PCHA)") {
+          $(this).siblings('.affiliation-controlled#PCHA_affiliation_container').slideDown('fast');
+        } else if ($(this).children("option:selected").val() === 'University Healthcare Alliance (UHA)') {
+          $(this).siblings('.affiliation-controlled#UHA_affiliation_container').slideDown('fast');
+        }
+      });
+
+
+      $('select.select-controller').change(function() {
+        var controllerClasses = $(this).children("option:selected").attr('class');
+        var controllerClass = controllerClasses.split(' ')[0];
+        var controlledFieldContents = '#' + controllerClass.replace('_&_', '_'); // JQuery can't handle & in selectors
+        var controlledField = '#' + controllerClass.split('-')[0];
+        $(controlledField).html('<option value="">--</option>');
+        $(controlledField).parent().hide();
+
+        if ($(controlledFieldContents).html() != null) {
+          $(controlledField).html($(controlledFieldContents).html()).parent().show();
+        }
+      });
+
+      // Dependent required fields
+      $('select#professional_designation').change(function() {
+        var dependentRequiredFields = 'li#license-number_container, li#license-country_container, li#physician_status_container, li#patient_population_container, li#specialty-container';
+
+        if ($(this).children("option:selected").val() === 'MD' || $(this).children("option:selected").val() === 'MD,PhD' || $(this).children("option:selected").val() === 'DO' || $(this).children("option:selected").val() === 'MBBS') {
+          $(this).parent().siblings(dependentRequiredFields).addClass('required');
+        } else {
+          $(this).parent().siblings(dependentRequiredFields).removeClass('required');
+        }
+      });
+      $('select#stanford_affiliation').change(function() {
+        if ($(this).children("option:selected").val() === 'Other' || $(this).children("option:selected").val() === '') {
+          $(this).parent().siblings('li.field').removeClass('required');
+        } else {
+          $(this).parent().siblings('li.field').addClass('required');
+        }
+      });
+      $('select#license_country').change(function() {
+        var dependentRequiredFields = 'li#license-state_container';
+
+        if ($(this).children("option:selected").val() === 'United States') {
+          $(this).parent().siblings(dependentRequiredFields).addClass('required');
+        } else {
+          $(this).parent().siblings(dependentRequiredFields).removeClass('required');
+        }
+      });
+      $('select#country').change(function() {
+        var dependentRequiredFields = 'li#state_container';
+
+        if ($(this).children("option:selected").val() === 'United States') {
+          $(this).parent().siblings(dependentRequiredFields).addClass('required');
+        } else {
+          $(this).parent().siblings(dependentRequiredFields).removeClass('required');
+        }
+      });
+
+//--------------------------------------- /Client side registration behavior ----------------------------------------//
+    });
+
+  </script>

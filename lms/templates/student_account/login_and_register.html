@@ -14,6 +14,229 @@
         var options = ${data | n, dump_js_escaped_json};
         LogistrationFactory(options);
     </%static:require_module>
+    <script type="text/javascript">
+    $( document ).ready(function() {
+        var formWrapper = $('login-and-registration-container');
+        console.log(formWrapper);
+        $(function displayLogic() {
+
+          var view_name = 'view-register';
+
+          // Construct dicts for sub-specialty, sub-affiliation dropdowns
+          SUB_AFFILIATION_CHOICES = {
+              'Packard_Childrens_Health_Alliance' : [['Bayside_Medical_Group', 'Bayside Medical Group'],
+                                                     ['Diablo_Valley_Child_Neurology',
+                                                       'Diablo Valley Child Neurology'],
+                                                      ['Jagdip_Powar_Associates',
+                                                       'Jagdip Powar, MD and Associates'],
+                                                      ['Judy_Fuentebella_Associates',
+                                                       'Judy Fuentebella, MD  and Associates'],
+                                                      ['Livermore_Pleasanton_San_Ramon_Pediatrics_Group',
+                                                       'Livermore Pleasanton San Ramon Pediatrics Group'],
+                                                      ['Pediatric_Cardiology_Medical_Group',
+                                                       'Pediatric Cardiology Medical Group'],
+                                                      ['Pediatric_Cardiology_Associates',
+                                                       'Pediatric Cardiology Associates'],
+                                                      ['Peninsula_Pediatrics', 'Peninsula Pediatrics'],
+                                                      ['Sabina_Ali_Associates',
+                                                       'Sabina Ali, MD  and Associates']],
+              'University_Healthcare_Alliance' : [['Affinity_Medical_Partners_Medical_Group', 'Affinity Medical Partners Medical Group [AMP]'],
+                                                  ['Bay_Valley_Medical_Group', 'Bay Valley Medical Group [BVMG]'],
+                                                  ['Cardiovascular_Consultants_Medical_Group', 'Cardiovascular Consultants Medical Group [CCMG]'],
+                                                  ['Menlo_Medical_Clinic', 'Menlo Medical Clinic [MMC]']]
+          }
+
+          SUB_SPECIALTY_CHOICES = {
+              'Cardiovascular_Health': [
+                  ['Cardiac_Surgery', 'Cardiac Surgery'],
+                  ['Cardiology', 'Cardiology'],
+                  ['Cardiothoracic', 'Cardiothoracic'],
+                  ['Cardiothoracic_Surgery', 'Cardiothoracic Surgery'],
+                  ['Cardiovascular_Disease', 'Cardiovascular Disease'],
+                  ['Cath_Angio/Lab', 'Cath Angio/Lab'],
+                  ['Electrophysiology', 'Electrophysiology'],
+                  ['Interventional_Cardiology', 'Interventional Cardiology'],
+              ],
+              'Internal_Medicine': [
+                  ['Adolescent_Medicine', 'Adolescent Medicine'],
+                  ['Adult_Congenital_Heart_Disease', 'Adult Congenital Heart Disease'],
+                  ['Advanced_Heart_Failure_and_Transplant_Cardiology', 'Advanced Heart Failure and Transplant Cardiology'],
+                  ['Allergy_&_Immunology', 'Allergy & Immunology'],
+                  ['Cardiovascular_Disease', 'Cardiovascular Disease'],
+                  ['Clinical_Cardiac_Electrophysiology', 'Clinical Cardiac Electrophysiology'],
+                  ['Critical_Care_Medicine', 'Critical Care Medicine'],
+                  ['Endocrinology,_Diabetes,_&_Metabolism', 'Endocrinology, Diabetes, & Metabolism'],
+                  ['Gastroenterology', 'Gastroenterology'],
+                  ['Geriatric_Medicine', 'Geriatric Medicine'],
+                  ['Hematology', 'Hematology'],
+                  ['Hospice_&_Palliative_Medicine', 'Hospice & Palliative Medicine'],
+                  ['Hospital_Medicine,_Focused_Practice', 'Hospital Medicine, Focused Practice'],
+                  ['Infectious_Disease', 'Infectious Disease'],
+                  ['Interventional_Cardiology', 'Interventional Cardiology'],
+                  ['Medical_Oncology', 'Medical Oncology'],
+                  ['Nephrology', 'Nephrology'],
+                  ['Pulmonary_Disease', 'Pulmonary Disease'],
+                  ['Rheumatology', 'Rheumatology'],
+                  ['Sleep_Medicine', 'Sleep Medicine'],
+                  ['Sports_Medicine', 'Sports Medicine'],
+              ],
+              'Obstetrics_&_Gynecology': [
+                  ['Female_Pelvic_Medicine_and_Reconstructive_Surgery', 'Female Pelvic Medicine and Reconstructive Surgery'],
+                  ['Gynecologic_Oncology', 'Gynecologic Oncology'],
+                  ['Maternal-Fetal_Medicine', 'Maternal-Fetal Medicine'],
+                  ['Reproductive_Endocrinology_and_Infertility', 'Reproductive Endocrinology and Infertility'],
+              ],
+              'Oncology': [
+                  ['Hematology', 'Hematology'],
+                  ['Medical_Oncology', 'Medical Oncology'],
+                  ['Radiation_Oncology', 'Radiation Oncology'],
+              ],
+              'Orthopedics_&_Sports_Medicine': [
+                  ['Surgery', 'Surgery'],
+              ],
+              'Pediatrics': [
+                  ['Adolescent_Medicine', 'Adolescent Medicine'],
+                  ['Allergy,_Immunology,_&_Rheumatology', 'Allergy, Immunology, & Rheumatology'],
+                  ['Anesthesiology', 'Anesthesiology'],
+                  ['Cardiovascular_Health', 'Cardiovascular Health'],
+                  ['Complimentary_Medicine_&_Pain_Management', 'Complimentary Medicine & Pain Management'],
+                  ['Critical_Care_&_Pulmonology', 'Critical Care & Pulmonology'],
+                  ['Dental_Specialties', 'Dental Specialties'],
+                  ['Dermatology', 'Dermatology'],
+                  ['Emergency_Medicine_&_Trauma', 'Emergency Medicine & Trauma'],
+                  ['Endocrinology_&_Metabolism', ' Endocrinology & Metabolism'],
+                  ['Family_Medicine_&_Community_Health', 'Family Medicine & Community Health'],
+                  ['Gastroenterology_&_Hepatology', 'Gastroenterology & Hepatology'],
+                  ['Genetics_&_Genomics', 'Genetics & Genomics'],
+                  ['Gerontology', 'Gerontology'],
+                  ['Hematology', 'Hematology'],
+                  ['Infectious_Disease_&_Global_Health', 'Infectious Disease & Global Health'],
+                  ['Internal_Medicine', 'Internal Medicine'],
+                  ['Neonatology', 'Neonatology'],
+                  ['Nephrology', 'Nephrology'],
+                  ['Neurology_&_Neurologic_Surgery', 'Neurology & Neurologic Surgery'],
+                  ['Obstetrics_&_Gynecology', 'Obstetrics & Gynecology'],
+                  ['Oncology', 'Oncology'],
+                  ['Ophthalmology', 'Ophthalmology'],
+                  ['Orthopedics_&_Sports_Medicine', 'Orthopedics & Sports Medicine'],
+                  ['Otolaryngology_[ENT]', 'Otolaryngology [ENT]'],
+                  ['Pathology_&_Laboratory_Medicine', 'Pathology & Laboratory Medicine'],
+                  ['Preventative_Medicine_&_Nutrition', 'Preventative Medicine & Nutrition'],
+                  ['Psychiatry_&_Behavioral_Sciences', 'Psychiatry & Behavioral Sciences'],
+                  ['Radiology', 'Radiology'],
+                  ['Surgery', 'Surgery'],
+                  ['Urology', 'Urology'],
+                  ['Other/None', 'Other/None'],
+              ],
+              'Radiology': [
+                  ['Diagnostic_Radiology', 'Diagnostic Radiology'],
+                  ['Interventional_Radiology_and_Diagnostic_Radiology', 'Interventional Radiology and Diagnostic Radiology'],
+                  ['Medical_Physics', 'Medical Physics'],
+                  ['Radiation_Oncology', 'Radiation Oncology'],
+                  ['Therapeutic_Medical_Physics', 'Therapeutic Medical Physics'],
+              ],
+              'Surgery': [
+                  ['Complex_General_Surgical_Oncology', 'Complex General Surgical Oncology'],
+                  ['General_Surgery', 'General Surgery'],
+                  ['Hand_Surgery', 'Hand Surgery'],
+                  ['Hospice_and_Palliative_Medicine', 'Hospice and Palliative Medicine'],
+                  ['Pediatric_Surgery', 'Pediatric Surgery'],
+                  ['Surgical_Critical_Care', 'Surgical Critical Care'],
+                  ['Vascular_Surgery', 'Vascular Surgery'],
+              ],
+          }
+
+          // adding js class for styling with accessibility in mind
+          $('body').addClass('js').addClass(view_name);
+
+          // new window/tab opening
+          $('a[rel="external"], a[class="new-vp"]').click( function() {
+            window.open( $(this).attr('href') );
+            return false;
+          });
+
+    //---------------------------------------- Client side registration behavior ----------------------------------------//
+
+          // form field label styling on focus
+          $("form :input").focus(function() {
+            $("label[for='" + this.id + "']").parent().addClass("is-focused");
+          }).blur(function() {
+            $("label").parent().removeClass("is-focused");
+          });
+
+          // display dependent form sections
+
+          $('select.affiliation-controller').change(function() {
+            $(this).siblings('.affiliation-controlled').slideUp('fast');
+
+            if ($(this).children("option:selected").val() === 'Stanford University') {
+              $(this).siblings('.affiliation-controlled#sunet_id_container, .affiliation-controlled#stanford_department_container').slideDown('fast');
+            } else if ($(this).children("option:selected").val() === "Packard Children's Health Alliance (PCHA)") {
+              $(this).siblings('.affiliation-controlled#PCHA_affiliation_container').slideDown('fast');
+            } else if ($(this).children("option:selected").val() === 'University Healthcare Alliance (UHA)') {
+              $(this).siblings('.affiliation-controlled#UHA_affiliation_container').slideDown('fast');
+            }
+          });
+
+
+          $('select.select-controller').change(function() {
+            var controllerClasses = $(this).children("option:selected").attr('class');
+            var controllerClass = controllerClasses.split(' ')[0];
+            var controlledFieldContents = '#' + controllerClass.replace('_&_', '_'); // JQuery can't handle & in selectors
+            var controlledField = '#' + controllerClass.split('-')[0];
+            $(controlledField).html('<option value="">--</option>');
+            $(controlledField).parent().hide();
+
+            if ($(controlledFieldContents).html() != null) {
+              $(controlledField).html($(controlledFieldContents).html()).parent().show();
+            }
+          });
+
+          // Dependent required fields
+          $('body').on('change', '#register-professional_designation', function() {
+            console.log('changed');
+            var dependentRequiredFields = '#register-license-number, #register-license_country, #register-physician_status, #register-patient_population, #register-specialty';
+
+            if ($(this).children("option:selected").val() === 'MD' || $(this).children("option:selected").val() === 'MD,PhD' || $(this).children("option:selected").val() === 'DO' || $(this).children("option:selected").val() === 'MBBS') {
+
+              $(dependentRequiredFields).prop('required', 'true');
+              $(dependentRequiredFields).prev().addClass('required');
+            } else {
+              $(dependentRequiredFields).prop('required', 'false');
+              $(dependentRequiredFields).prev().removeClass('required');
+            }
+          });
+          $('select#stanford_affiliation').change(function() {
+            if ($(this).children("option:selected").val() === 'Other' || $(this).children("option:selected").val() === '') {
+              $(this).parent().siblings('li.field').removeClass('required');
+            } else {
+              $(this).parent().siblings('li.field').addClass('required');
+            }
+          });
+          $('select#license_country').change(function() {
+            var dependentRequiredFields = 'li#license-state_container';
+
+            if ($(this).children("option:selected").val() === 'United States') {
+              $(this).parent().siblings(dependentRequiredFields).addClass('required');
+            } else {
+              $(this).parent().siblings(dependentRequiredFields).removeClass('required');
+            }
+          });
+          $('select#country').change(function() {
+            var dependentRequiredFields = 'li#state_container';
+
+            if ($(this).children("option:selected").val() === 'United States') {
+              $(this).parent().siblings(dependentRequiredFields).addClass('required');
+            } else {
+              $(this).parent().siblings(dependentRequiredFields).removeClass('required');
+            }
+          });
+
+    //--------------------------------------- /Client side registration behavior ----------------------------------------//
+        });
+    });
+  </script>
+
 </%block>
 
 <%block name="header_extras">
@@ -23,6 +246,12 @@
         </script>
 % endfor
 </%block>
+
+<style>
+label.required:after {
+	content: '*';
+}
+</style>
 
 <div class="section-bkg-wrapper">
     <div id="login-and-registration-container" class="login-register" />
