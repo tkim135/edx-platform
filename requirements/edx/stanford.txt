@@ -16,3 +16,4 @@ ubcpi-xblock==0.5.3
 -e git+https://github.com/oppia/xblock.git@9f6b95b7eb7dbabb96b77198a3202604f96adf65#egg=oppia-xblock
 git+https://github.com/mfogel/django-settings-context-processor.git
 git+https://github.com/open-craft/problem-builder.git@v2.6.5#egg=xblock-problem-builder==2.6.5
+-e git+https://github.com/Stanford-Online/xblock_3d_viewer.git@b1d6cf90d0909decfae51b7a34fa8baac3666d96#egg=mt3d-xblock
