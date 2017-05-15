@@ -573,8 +573,6 @@
 
         ReportDownloads.prototype.get_forum_csv = function(cb) {
             var ths = this;
-            console.log(ths.$clicked_name);
-            console.log(ths.$graph_endpoint);
             return $.ajax({
                 dataType: 'json',
                 url: ths.$graph_endpoint,

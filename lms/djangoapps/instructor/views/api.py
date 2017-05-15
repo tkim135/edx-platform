@@ -3089,7 +3089,7 @@ def graph_course_forums_usage(request, course_id):
     """
     Generate a d3 graphable csv-string by checking the report store for the clicked_on file
     """
-    clicked_text = request.GET.get('clicked_on')
+    clicked_text = request.POST.get('clicked_on')
     course_key = SlashSeparatedCourseKey.from_deprecated_string(course_id)
     report_store = ReportStore.from_config(config_name='GRADES_DOWNLOAD')
     graph = None
