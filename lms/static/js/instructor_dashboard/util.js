@@ -450,6 +450,8 @@
             this.$reports_request_response = reports.find('.request-response');
             this.$reports_request_response_error = reports.find('.request-response-error');
             this.$delete_endpoint = $('.report-downloads-delete').data('endpoint');
+            this.$graph_endpoint = $(".report-downloads-graph").data('endpoint');
+            this.$clicked_name;
             // /Stanford Fork
 
             POLL_INTERVAL = 20000;
@@ -523,7 +525,7 @@
             $tablePlaceholder = $('<div/>', {
                 class: 'slickgrid'
             });
-            this.$report_downloads_table.append($tablePlaceholder);
+            ths.$report_downloads_table.append($tablePlaceholder);
             grid = new Slick.Grid($tablePlaceholder, reportDownloadsData, columns, options);
             grid.onClick.subscribe(function(event) {
                 var reportUrl;
@@ -536,6 +538,14 @@
                 return Logger.log('edx.instructor.report.downloaded', {
                     report_url: reportUrl
                 });
+            });
+
+            $(".graph-forums").click(function() {
+                var filename_cell, table_row;
+                table_row = $(this).parent().parent()
+                filename_cell = table_row.find('.report-link');
+                ths.$clicked_name = filename_cell.text();
+                ths.graph_forums();
             });
 
             $('#report-downloads-table .delete-report').click(function() {
@@ -555,11 +565,59 @@
                 }
             });
 
-            this.$reports_request_response.hide();
-            this.$reports_request_response_error.hide();
+            ths.$reports_request_response.hide();
+            ths.$reports_request_response_error.hide();
 
             return grid.autosizeColumns();
         };
+
+        ReportDownloads.prototype.get_forum_csv = function(cb) {
+            var ths = this;
+            console.log(ths.$clicked_name);
+            console.log(ths.$graph_endpoint);
+            return $.ajax({
+                dataType: 'json',
+                url: ths.$graph_endpoint,
+                type: 'POST',
+                data: {
+                    "clicked_on": ths.$clicked_name
+                },
+                success: function(data) {
+                    return typeof cb === "function" ? cb(null, data) : void 0;
+                },
+                error: (function(ths) {
+                    return function(std_ajax_err) {
+                        return typeof cb === "function" ? cb(gettext('Error getting forum csv')) : void 0;
+                    };
+                })(this)
+            });
+        }
+        ReportDownloads.prototype.graph_forums = function(graphEndpoint) {
+            var ths = this;
+            return ths.get_forum_csv((function(ths) {
+                return function(error, forums) {
+                    var data, error_str, file_name, graph_classname;
+                    if (error) {
+                        return ths.show_graph_errors(error);
+                    }
+                    data = forums['data'];
+                    file_name = forums['filename'];
+                    graph_classname = "report-downloads-graph";
+                    if (data === 'failure') {
+                        error_str = "No Data To Graph. The file might have expired; please refresh and try again";
+                        $(".report-downloads-graph-title").html(error_str);
+                        $("." + graph_classname).html("");
+                        return 'No data to Graph';
+                    }
+                    $(".report-downloads-graph-title").html(file_name);
+                    return d3_graph_data_download(data, "report-downloads-graph");
+                };
+            })(this));
+        },
+        ReportDownloads.prototype.show_graph_errors = function(msg) {
+            var ref;
+            return (ref = this.$error_section) != null ? ref.text(msg) : void 0;
+        }
 
         ReportDownloads.prototype.remove_row_from_ui = function(row) {
             var currX, currY, i, len, results, row_height, rows_after, sib_row;
