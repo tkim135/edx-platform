@@ -220,7 +220,7 @@
                 {
                     title: gettext('Linked Accounts'),
                     subtitle: StringUtils.interpolate(
-                        gettext('You can link your social media accounts to simplify signing in to {platform_name}.'),
+                        gettext('Below is a list of accounts you have linked to your {platform_name} account.'),
                         {platform_name: platformName}
                     ),
                     fields: _.map(authData.providers, function(provider) {

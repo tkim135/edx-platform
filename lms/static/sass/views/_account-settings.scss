@@ -70,6 +70,10 @@
                 background: transparent none;
             }
 
+            #orders-tab {
+                display: none;
+            }
+
             button {
                 @extend %ui-clear-button;
                 @extend %btn-no-style;
