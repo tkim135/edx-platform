@@ -2,8 +2,8 @@
 
 $(function () {
 
-  // Click handler for x axis major ticks
-  $('.metrics-container').on('click', '.stacked-bar-graph-axis .tick.major', function () {
+  // Click handler for x axis ticks
+  $('.metrics-container').on('click', '.stacked-bar-graph-axis .tick', function () {
 
     var stackedBarElement;
     var xValue;
