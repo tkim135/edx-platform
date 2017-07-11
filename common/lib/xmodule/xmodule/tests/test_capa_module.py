@@ -1672,7 +1672,7 @@ class CapaModuleTest(unittest.TestCase):
                 get_request_dict = {CapaFactory.answer_key(): '3'}
                 results = module.submit_problem(get_request_dict)
                 self.assertFalse(module.should_show_reset_button())
-                self.assertFalse(module.should_show_submit_button())
+                self.assertFalse(module.should_enable_submit_button())
 
     def test_timed_save(self):
         """
