@@ -1634,7 +1634,7 @@ class CapaModuleTest(unittest.TestCase):
         rendered = module.start_problem()
 
         self.assertIsNotNone(module.time_started)
-        self.assertTrue(module.should_show_submit_button())
+        self.assertTrue(module.should_enable_submit_button())
         self.assertFalse(module.closed())
 
     def test_time_expired(self):
