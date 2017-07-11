@@ -1676,7 +1676,7 @@ class CapaModuleTest(unittest.TestCase):
         with self.assertRaises(TimeExpiredError) as context:
             module.start_problem()
             get_request_dict = {CapaFactory.answer_key(): '3'}
-            module.check_problem(get_request_dict)
+            module.submit_problem(get_request_dict)
 
     def test_timed_multi_attempt(self):
         """
@@ -1694,7 +1694,7 @@ class CapaModuleTest(unittest.TestCase):
                     npoints=0.9,
                 )
                 get_request_dict = {CapaFactory.answer_key(): '3'}
-                results = module.check_problem(get_request_dict)
+                results = module.submit_problem(get_request_dict)
                 self.assertFalse(module.should_show_reset_button())
                 self.assertFalse(module.should_show_submit_button())
 

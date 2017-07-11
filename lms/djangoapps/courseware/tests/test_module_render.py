@@ -1761,7 +1761,7 @@ class TestModuleTrackingContext(SharedModuleStoreTestCase):
 
         def get_event_context(self, event_type, event):  # pylint: disable=unused-argument
             """
-            This method return data that should be associated with the "check_problem" event
+            This method return data that should be associated with the "problem_check" event
             """
             return {'content': 'test1', 'data_field': 'test2'}
 

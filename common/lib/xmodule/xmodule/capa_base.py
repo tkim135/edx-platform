@@ -1201,7 +1201,7 @@ class CapaMixin(CapaFields):
         answers_without_files = convert_files_to_filenames(answers)
         event_info['answers'] = answers_without_files
 
-        metric_name = u'capa.check_problem.{}'.format
+        metric_name = u'capa.problem_check.{}'.format
         # Can override current time
         current_time = datetime.datetime.now(UTC())
         if override_time is not False:
