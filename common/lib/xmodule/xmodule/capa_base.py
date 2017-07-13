@@ -755,7 +755,7 @@ class CapaMixin(CapaFields):
             'total_seconds_left': total_seconds_left,
             'minutes_allowed': self.minutes_allowed,
             'start_time': self.time_started,
-            'end_time_to_display': end_time_to_display,
+            'end_time_to_display': end_time_to_display.replace(microsecond=0),
             'short_id': self.location.html_id(),
             'submit_button': submit_button,
             'submit_button_submitting': submit_button_submitting,
