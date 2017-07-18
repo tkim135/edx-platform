@@ -941,12 +941,10 @@ class TestInstructorAPIDenyLevels(SharedModuleStoreTestCase, LoginEnrollmentTest
         status_code: expected HTTP status code response
         msg: message to display if assertion fails.
         """
-        # Stanford Fork
         if endpoint in ['get_ora2_responses']:
             url = reverse(endpoint, kwargs={'course_id': self.course.id.to_deprecated_string(), 'include_email': False})
         else:
             url = reverse(endpoint, kwargs={'course_id': self.course.id.to_deprecated_string()})
-        # / Stanford Fork
         if endpoint in INSTRUCTOR_GET_ENDPOINTS:
             response = self.client.get(url, args)
         else:
@@ -3631,7 +3629,6 @@ class TestInstructorAPILevelsDataDump(SharedModuleStoreTestCase, LoginEnrollment
         already_running_status = "An ORA data report generation task is already in progress."
         self.assertIn(already_running_status, response.content)
 
-    # Stanford Fork
     def test_collect_course_forums_data_success(self):
         url = reverse('get_course_forums_usage', kwargs={'course_id': unicode(self.course.id)})
 
@@ -3664,7 +3661,6 @@ class TestInstructorAPILevelsDataDump(SharedModuleStoreTestCase, LoginEnrollment
             mock_submit_student_forums_task.side_effect = AlreadyRunningError()
             response = self.client.get(url, {})
         already_running_status = "A student forums usage report task is already in progress."
-    # / Stanford Fork
 
     def test_get_student_progress_url(self):
         """ Test that progress_url is in the successful response. """

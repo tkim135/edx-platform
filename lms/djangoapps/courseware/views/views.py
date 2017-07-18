@@ -6,10 +6,8 @@ import json
 import logging
 import urllib
 
-# Stanford Fork
 from util.json_request import JsonResponse
 from pytz import timezone
-# / Stanford Fork
 
 from collections import OrderedDict, namedtuple
 from datetime import datetime
@@ -24,7 +22,7 @@ from django.core.context_processors import csrf
 from django.db import transaction
 from django.db.models import Q
 
-from django.http import HttpResponseNotFound, HttpResponseServerError # <- Stanford Fork
+from django.http import HttpResponseNotFound, HttpResponseServerError
 
 from django.http import Http404, HttpResponse, HttpResponseBadRequest, HttpResponseForbidden, QueryDict
 from django.shortcuts import redirect
@@ -72,7 +70,7 @@ from courseware.courses import (
 )
 from courseware.masquerade import setup_masquerade
 
-from courseware.models import CoursePreference # <- Stanford Fork
+from courseware.models import CoursePreference
 
 from courseware.model_data import FieldDataCache
 from courseware.models import StudentModule, BaseStudentModuleHistory
@@ -89,7 +87,7 @@ from openedx.core.djangoapps.credit.api import (
     is_credit_course
 )
 
-from student.models import UserProfile # <- Stanford Fork
+from student.models import UserProfile
 
 from openedx.core.djangoapps.site_configuration import helpers as configuration_helpers
 from shoppingcart.utils import is_shopping_cart_enabled
@@ -759,11 +757,9 @@ def _progress(request, course_key, student_id):
 
     course_grade = CourseGradeFactory().create(student, course)
 
-    # Stanford Fork
     courseware_summary = []
     if settings.FEATURES['ENABLE_PROGRESS_SUMMARY']:
         courseware_summary = course_grade.chapter_grades
-    # / Stanford Fork
 
     grade_summary = course_grade.summary
 

@@ -38,11 +38,9 @@ from util.file import (
 )
 from util.json_request import JsonResponse, JsonResponseBadRequest
 
-# Stanford Fork
 from instructor_analytics.csvs import create_csv_response
 import gzip
 from instructor.lti_grader import LTIGrader
-# / Stanford Fork
 
 from util.views import require_global_staff
 from lms.djangoapps.instructor.views.instructor_task_helpers import extract_email_features, extract_task_features
@@ -113,7 +111,7 @@ from .tools import (
     parse_datetime,
     set_due_date_extension,
     strip_if_string,
-    generate_course_forums_d3, # <- Stanford Fork
+    generate_course_forums_d3,
 )
 from opaque_keys.edx.keys import CourseKey, UsageKey
 from opaque_keys.edx.locations import SlashSeparatedCourseKey

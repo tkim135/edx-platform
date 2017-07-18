@@ -17,7 +17,7 @@ from django.utils import timezone
 import ddt
 from mock import patch
 
-from unittest import skip # <- Stanford Fork
+from unittest import skip
 
 from django.core.urlresolvers import reverse
 from rest_framework.test import APITestCase

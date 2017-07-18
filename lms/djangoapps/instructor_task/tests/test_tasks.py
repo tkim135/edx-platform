@@ -40,13 +40,11 @@ from lms.djangoapps.instructor_task.tasks_helper import (
     upload_ora2_data,
 )
 
-# Stanford Fork
 from lms.djangoapps.instructor_task.tasks_helper import (
     push_ora2_responses_to_s3,
     push_course_forums_data_to_s3,
     push_student_forums_data_to_s3,
 )
-# / Stanford Fork
 
 PROBLEM_URL_NAME = "test_urlname"
 
@@ -64,7 +62,7 @@ class TestInstructorTasks(InstructorTaskModuleTestCase):
         self.location = self.problem_location(PROBLEM_URL_NAME)
 
     def _create_input_entry(self, student_ident=None, use_problem_url=True, course_id=None, only_if_higher=False,
-                            include_email=True): # <- Stanford Fork
+                            include_email=True):
         """Creates a InstructorTask entry for testing."""
         task_id = str(uuid4())
         task_input = {'only_if_higher': only_if_higher}

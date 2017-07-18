@@ -20,7 +20,7 @@ from django_comment_client.tests.group_id import (
 from django_comment_client.tests.unicode import UnicodeTestMixin
 from django_comment_client.tests.utils import CohortedTestCase, ForumsEnableMixin
 from django_comment_client.utils import strip_none
-from student.models import UserProfile # <- Stanford Fork
+from student.models import UserProfile
 from lms.djangoapps.discussion import views
 from student.tests.factories import UserFactory, CourseEnrollmentFactory
 from util.testing import UrlResetMixin

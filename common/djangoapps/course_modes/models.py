@@ -117,7 +117,6 @@ class CourseMode(models.Model):
     NO_ID_PROFESSIONAL_MODE = "no-id-professional"
     CREDIT_MODE = "credit"
 
-    # Stanford Fork: getting DEFAULT_MODE values from settings so we can generate certificates properly without breaking tests!
     DEFAULT_MODE = Mode(
         settings.COURSE_MODE_DEFAULTS['slug'],
         settings.COURSE_MODE_DEFAULTS['name'],

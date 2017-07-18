@@ -19,7 +19,7 @@ from courseware.student_field_overrides import (
 from xmodule.fields import Date
 from opaque_keys.edx.keys import UsageKey
 
-import csv # <- Stanford Fork
+import csv
 
 DATE_FIELD = Date()
 

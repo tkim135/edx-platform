@@ -45,7 +45,7 @@ from openedx.core.djangoapps.external_auth.views import generate_password
 from student.models import CourseEnrollment, UserProfile, Registration
 from student.roles import CourseStaffRole, CourseInstructorRole
 import track.views
-from util.json_request import JsonResponse # <- Stanford Fork
+from util.json_request import JsonResponse
 from xmodule.modulestore.django import modulestore
 from opaque_keys.edx.locations import SlashSeparatedCourseKey
 

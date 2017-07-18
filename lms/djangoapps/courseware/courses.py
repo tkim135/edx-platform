@@ -18,10 +18,8 @@ from xmodule.modulestore.exceptions import ItemNotFoundError
 from static_replace import replace_static_urls
 from xmodule.x_module import STUDENT_VIEW
 
-# Stanford Fork
 from util.date_utils import get_default_time_display
 from util.keyword_substitution import substitute_keywords_with_data
-# / Stanford Fork
 
 from courseware.access import has_access
 from courseware.date_summary import (

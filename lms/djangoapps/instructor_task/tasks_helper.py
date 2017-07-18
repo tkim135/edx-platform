@@ -11,7 +11,7 @@ from datetime import datetime
 from itertools import chain
 from time import time
 
-import urllib # <- Stanford Fork
+import urllib
 
 import dogstats_wrapper as dog_stats_api
 import re
@@ -47,7 +47,7 @@ from courseware.model_data import DjangoKeyValueStore, FieldDataCache
 from courseware.models import StudentModule
 from courseware.module_render import get_module_for_descriptor_internal
 
-from instructor_analytics.basic import student_response_rows # <- Stanford Fork
+from instructor_analytics.basic import student_response_rows
 
 from edxmako.shortcuts import render_to_string
 from instructor_analytics.basic import (

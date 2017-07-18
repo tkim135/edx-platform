@@ -35,13 +35,11 @@ from lms.djangoapps.instructor_task.api import (
     SpecificStudentIdMissingError,
 )
 
-# Stanford Fork
 from instructor_task.tasks import (
     get_ora2_responses,
     get_course_forums_usage,
     get_student_forums_usage,
 )
-# / Stanford Fork
 
 from lms.djangoapps.instructor_task.api_helper import AlreadyRunningError
 from lms.djangoapps.instructor_task.models import InstructorTask, PROGRESS
@@ -258,7 +256,6 @@ class InstructorTaskCourseSubmitTest(TestReportMixin, InstructorTaskCourseTestCa
         )
         self._test_resubmission(api_call)
 
-# Stanford Fork
     def test_submit_ora2_request_task(self):
         request = self.create_task_request(self.instructor)
 
@@ -276,7 +273,6 @@ class InstructorTaskCourseSubmitTest(TestReportMixin, InstructorTaskCourseTestCa
             submit_ora2_request_task(request, self.course.id, "False")
 
             mock_submit_task.assert_called_once_with(request, 'ora2_responses', get_ora2_responses, self.course.id, {'include_email': 'False'}, '')
-# / Stanford Fork
 
     def test_submit_student_forums_usage_task(self):
         request = self.create_task_request(self.instructor)

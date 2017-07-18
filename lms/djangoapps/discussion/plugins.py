@@ -20,7 +20,7 @@ class DiscussionTab(EnrolledTab):
     view_name = 'discussion.views.forum_form_discussion'
     is_hideable = settings.FEATURES.get('ALLOW_HIDING_DISCUSSION_TAB', False)
     is_default = False
-    is_visible_to_sneak_peek = False # <- Stanford Fork
+    is_visible_to_sneak_peek = False
 
     @classmethod
     def is_enabled(cls, course, user=None):

@@ -53,11 +53,11 @@
     .response-header-content {
       display: inline-block;
       vertical-align: top;
-      width: flex-grid(10,12); // <- Stanford Fork
+      width: flex-grid(10,12);
     }
 
     .response-header-actions {
-      width: flex-grid(2,12); // <- Stanford Fork
+      width: flex-grid(2,12);
       @include float(right);
       @include right($baseline);
       position: absolute;

@@ -337,12 +337,10 @@
                 exports: 'js/ccx/schedule',
                 deps: ['jquery', 'underscore', 'backbone', 'gettext', 'moment']
             },
-            // Stanford Fork
             'js/inline_analytics': {
                 exports: 'js/inline_analytics',
                 deps: ['gettext']
             },
-            // / Stanford Fork
             'js/commerce/views/receipt_view': {
                 exports: 'edx.commerce.ReceiptView',
                 deps: ['jquery', 'jquery.url', 'backbone', 'underscore', 'string_utils']
@@ -741,7 +739,7 @@
         'js/spec/edxnotes/views/visibility_decorator_spec.js',
         'js/spec/financial-assistance/financial_assistance_form_view_spec.js',
         'js/spec/groups/views/cohorts_spec.js',
-        'js/spec/inline_analytics_spec.js', // <- Stanford Fork
+        'js/spec/inline_analytics_spec.js',
         'js/spec/instructor_dashboard/certificates_bulk_exception_spec.js',
         'js/spec/instructor_dashboard/certificates_exception_spec.js',
         'js/spec/instructor_dashboard/certificates_invalidation_spec.js',

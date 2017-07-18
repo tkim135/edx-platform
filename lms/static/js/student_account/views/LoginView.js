@@ -125,7 +125,6 @@
                 },
 
                 saveError: function(error) {
-                    // Stanford Fork
                     var url;
                     var queryParameters = (function getUrlVars() {
                         // http://stackoverflow.com/a/4656873
@@ -150,7 +149,6 @@
                             return;
                         }
                     }
-                    // / Stanford Fork
                     
                     var msg = error.responseText;
                     if (error.status === 0) {

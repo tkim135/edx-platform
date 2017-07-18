@@ -14,14 +14,12 @@ urlpatterns = patterns(
     url(r'^list_course_role_members$',
         'lms.djangoapps.instructor.views.api.list_course_role_members', name="list_course_role_members"),
 
-    # Stanford Fork
     url(r'^list_course_sections$',
         'lms.djangoapps.instructor.views.api.list_course_sections', name="list_course_sections"),
     url(r'^list_course_problems$',
         'lms.djangoapps.instructor.views.api.list_course_problems', name="list_course_problems"),
     url(r'^list_course_tree$',
         'lms.djangoapps.instructor.views.api.list_course_tree', name="list_course_tree"),
-    # / Stanford Fork
 
     url(r'^modify_access$',
         'lms.djangoapps.instructor.views.api.modify_access', name="modify_access"),
@@ -32,7 +30,6 @@ urlpatterns = patterns(
     url(r'^get_grading_config$',
         'lms.djangoapps.instructor.views.api.get_grading_config', name="get_grading_config"),
 
-    # Stanford Fork
     url(r'^get_all_students(?P<make_csv>/csv)?$',
         'lms.djangoapps.instructor.views.api.get_all_students', name="get_all_students"),
     url(r'^save_query$',
@@ -54,7 +51,6 @@ urlpatterns = patterns(
         'lms.djangoapps.instructor.views.api.delete_temp_query', name="delete_temp_query"),
     url(r'^save_group_name',
         'lms.djangoapps.instructor.views.api.save_group_name', name="save_group_name"),
-    # / Stanford Fork
 
     url(r'^get_students_features(?P<csv>/csv)?$',
         'lms.djangoapps.instructor.views.api.get_students_features', name="get_students_features"),
