@@ -28,6 +28,8 @@ from certificates.models import (
 use_cme = settings.FEATURES.get('USE_CME_REGISTRATION', False)
 if use_cme:
     from cme_registration.models import CmeUserProfile
+if 'openedx.stanford.djangoapps.register_cme' in settings.INSTALLED_APPS:
+    from openedx.stanford.djangoapps.register_cme.models import ExtraInfo
 
 
 log = logging.getLogger(__name__)
@@ -56,6 +58,8 @@ def request_certificate(request):
                 designations = CmeUserProfile.objects.filter(user=student).values('professional_designation')
                 if len(designations):
                     designation = designations[0]['professional_designation']
+            if 'openedx.stanford.djangoapps.register_cme' in settings.INSTALLED_APPS:
+                designation = ExtraInfo.lookup_professional_designation(student)
 
             status = certificate_status_for_student(student, course_key)['status']
             if status in [CertificateStatuses.unavailable, CertificateStatuses.notpassing, CertificateStatuses.error]:

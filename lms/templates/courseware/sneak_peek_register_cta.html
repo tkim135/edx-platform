@@ -7,18 +7,18 @@ from django.utils.translation import ugettext as _
 from student.models import UserProfile
 %>
 % if course and user.is_authenticated() and not UserProfile.has_registered(user):
-  <p class="unauth-warning">
+  <p class="sneakpeek-warning">
   <%
   if settings.FEATURES.get('RESTRICT_ENROLL_BY_REG_METHOD'):
     reg_url = reverse('course-specific-register', args=[course.id.to_deprecated_string()])
   else:
     reg_url = reverse('register_user')
+  tos_link = u"<a href='{}'>".format(marketing_link('TOS'))
+  privacy_link = u"<a href='{}#privacy'>".format(marketing_link('TOS'))
   %>
-   ${_("Non-registered mode.  {tag_start}Register{tag_end} to save your course progress.")\
-     .format(platform_name=settings.PLATFORM_NAME,
-             tag_start="<a href='{}'>".format(reg_url),
-             tag_end="</a>"
-     )
-   }
+   ${Text(_("Non-registered mode.  {tag_start}Register{tag_end} to save your course progress.")).format(
+      tag_start=HTML("<a href='{}'>".format(reg_url)),
+      tag_end=HTML('</a>')
+    )}
   </p>
 % endif

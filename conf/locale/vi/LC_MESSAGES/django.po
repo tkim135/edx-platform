@@ -16835,3 +16835,7 @@ msgstr ""
 #: lms/templates/registration/activation_invalid.html:19
 msgid "Or you can go back to the {link_start}home page{link_end}."
 msgstr "Hoặc bạn có thể quay lại {link_start}trang chủ{link_end}."
+
+#: cms/templates/widgets/problem-edit.html:59
+msgid "Explanation"
+msgstr "Giải thích"

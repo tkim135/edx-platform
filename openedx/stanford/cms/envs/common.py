@@ -42,6 +42,10 @@ FEATURES.update({
     # warning to instructors about publicly-viewable content
     'CONTENT_VISIBILITY_NOTICE': True,
 })
+INSTALLED_APPS += (
+    # Added here to allow translations
+    'freetextresponse',
+)
 MIDDLEWARE_CLASSES += (
     # Log out sneakpeek users
     'sneakpeek.middleware.SneakPeekLogoutMiddleware',

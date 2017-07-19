@@ -1,4 +1,12 @@
 .course-info {
+  .sneakpeek-warning {
+    clear: both;
+    padding-top: 10px;
+  }
+  .sneakpeek-warning:before {
+    content: '* ';
+  }
+
   .container {
     padding-bottom: 120px;
   }

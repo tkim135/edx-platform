@@ -29,10 +29,10 @@
       "%(memberCount)s / %(maxMemberCount)s th\u00e0nh vi\u00ean t\u1ed1i \u0111a"
     ], 
     "%(numResponses)s other response": [
-      "%(numResponses)s c\u00e1c trang kh\u00e1c"
+      "%(numResponses)s ph\u1ea3n h\u1ed3i kh\u00e1c"
     ], 
     "%(numResponses)s response": [
-      "%(numResponses)s k\u1ebft qu\u1ea3"
+      "%(numResponses)s ph\u1ea3n h\u1ed3i"
     ], 
     "%(numVotes)s Vote": [
       "%(numVotes)s Phi\u1ebfu b\u1ea7u"
@@ -50,7 +50,7 @@
     "%(team_count)s Team": [
       "%(team_count)s nh\u00f3m"
     ], 
-    "%(university_name)s pursues the science of learning. Online learners are important participants in that pursuit. The information we gather from your engagement with our instructional offerings makes it possible for faculty, researchers, designers and engineers to continuously improve their work and, in that process, build learning science.": "%(university_name)s \u1ee9ng d\u1ee5ng khoa h\u1ecdc trong \u0111\u00e0o t\u1ea1o. H\u1ecdc vi\u00ean h\u1ecdc qua m\u1ea1ng l\u00e0 nh\u1eefng nh\u00e2n t\u1ed1 quan tr\u1ecdng trong cam k\u1ebft c\u1ee7a ch\u00fang t\u00f4i. C\u00e1c th\u00f4ng tin thu nh\u1eadn \u0111\u01b0\u1ee3c t\u1eeb s\u1ef1 tham gia c\u1ee7a c\u00e1c b\u1ea1n theo h\u01b0\u1edbng d\u1eabn t\u1eeb ch\u01b0\u01a1ng tr\u00ecnh s\u1ebd gi\u00fap c\u00e1c gi\u1ea3ng vi\u00ean, h\u01b0\u1edbng d\u1eabn vi\u00ean, nh\u00e0 nghi\u00ean c\u1ee9u v\u00e0 c\u00e1c nh\u00e2n vi\u00ean k\u1ef9 thu\u1eadt ti\u1ebfp t\u1ee5c n\u00e2ng cao ch\u1ea5t l\u01b0\u1ee3ng, v\u00e0 t\u1eeb \u0111\u00f3, t\u1ea1o d\u1ef1ng n\u00ean khoa h\u1ecdc \u0111\u00e0o t\u1ea1o", 
+    "%(university_name)s pursues the science of learning. Online learners are important participants in that pursuit. The information we gather from your engagement with our instructional offerings makes it possible for faculty, researchers, designers and engineers to continuously improve their work and, in that process, build learning science.": "%(university_name)s m\u01b0u c\u1ea7u khoa h\u1ecdc h\u1ecdc h\u1ecfi. H\u1ecdc vi\u00ean tr\u1ef1c tuy\u1ebfn l\u00e0 nh\u1eefng ng\u01b0\u1eddi tham gia quan tr\u1ecdng trong cu\u1ed9c m\u01b0u c\u1ea7u \u0111\u00f3. Th\u00f4ng tin ch\u00fang t\u00f4i thu th\u1eadp t\u1eeb vi\u1ec7c b\u1ea1n tham gia c\u00e1c ch\u01b0\u01a1ng tr\u00ecnh h\u1ecdc c\u1ee7a ch\u00fang t\u00f4i gi\u00fap cho ban gi\u1ea3ng vi\u00ean, c\u00e1c nh\u00e0 nghi\u00ean c\u1ee9u, c\u00e1c nh\u00e0 thi\u1ebft k\u1ebf v\u00e0 c\u00e1c k\u1ef9 s\u01b0 kh\u00f4ng ng\u1eebng c\u1ea3i thi\u1ec7n c\u00f4ng vi\u1ec7c c\u1ee7a m\u00ecnh, v\u00e0 trong qu\u00e1 tr\u00ecnh \u0111\u00f3, x\u00e2y d\u1ef1ng m\u00f4n khoa h\u1ecdc h\u1ecdc h\u1ecfi. ", 
     "%(unread_count)s new comment": [
       "%(unread_count)s b\u00ecnh lu\u1eadn m\u1edbi"
     ], 
@@ -81,10 +81,10 @@
       "%s k\u1ebft qu\u1ea3"
     ], 
     "(%(earned)s/%(possible)s point)": [
-      "(%(earned)s/%(possible)s points)"
+      "(%(earned)s/%(possible)s \u0111i\u1ec3m)"
     ], 
     "(%(num_points)s point possible)": [
-      "(%(num_points)s points possible)"
+      "(%(num_points)s \u0111i\u1ec3m c\u00f3 th\u1ec3)"
     ], 
     "(Caption will be displayed when you start playing the video.)": "(Ph\u1ee5 \u0111\u1ec1 s\u1ebd xu\u1ea5t hi\u1ec7n khi b\u1ea1n m\u1edf video.)", 
     "(Required Field)": "(Th\u00f4ng tin b\u1eaft bu\u1ed9c)", 
@@ -105,7 +105,7 @@
     "Active Threads": "C\u00e1c ch\u1ee7 \u0111\u1ec1 \u0111ang ho\u1ea1t \u0111\u1ed9ng", 
     "Add Cohort": "Th\u00eam nh\u00f3m h\u1ecdc vi\u00ean", 
     "Add Country": "Th\u00eam qu\u1ed1c gia", 
-    "Add Post": "Th\u00eam b\u00e0i \u0111\u0103ng", 
+    "Add Post": "Th\u00eam b\u00e0i vi\u1ebft", 
     "Add Students": "Th\u00eam H\u1ecdc Vi\u00ean", 
     "Add a New Cohort": "Th\u00eam m\u1ed9t nh\u00f3m m\u1edbi", 
     "Add a Response": "Th\u00eam m\u1ed9t Ph\u1ea3n h\u1ed3i", 
@@ -189,9 +189,9 @@
     "Bottom": "\u0110\u00e1y", 
     "Bullet list": "Danh s\u00e1ch kh\u00f4ng th\u1ee9 t\u1ef1", 
     "Bulleted List (Ctrl+U)": "Danh S\u00e1ch G\u1ea1ch \u0110\u1ea7u d\u00f2ng (Ctrl+U)", 
-    "By registering as an online learner, you are also participating in research intended to enhance Stanford's instructional offerings as well as the quality of learning and related sciences worldwide. In the interest of research, you may be exposed to some variations in the course materials. Stanford does not use learner data for any purpose beyond the University's stated missions of education and research. For purposes of research, we may share information we collect from online learning activities, including %(link_start)sPersonally Identifiable Information%(link_end)s, with researchers beyond Stanford. However, your Personally Identifiable Information will only be shared as permitted by applicable law, will be limited to what is necessary to perform the research, and will be subject to an agreement to protect the data. We may also share with the public or third parties aggregated information that does not personally identify you. Similarly, any research findings will be reported at the aggregate level and will not expose your personal identity.": "Khi \u0111\u0103ng k\u00fd l\u00e0 h\u1ecdc vi\u00ean qua m\u1ea1ng, \u0111\u1ed3ng ngh\u0129a v\u1edbi vi\u1ec7c b\u1ea1n tham gia nghi\u00ean c\u1ee9u \u0111\u1ec3 n\u00e2ng cao ch\u1ea5t l\u01b0\u1ee3ng \u0111\u00e0o t\u1ea1o t\u1ea1i \u0111\u1ea1i h\u1ecdc Stanford c\u0169ng nh\u01b0 khoa h\u1ecdc \u0111\u00e0o t\u1ea1o n\u00f3i chung tr\u00ean th\u1ebf gi\u1edbi. V\u00cc m\u1ee5c \u0111\u00edch nghi\u00ean c\u1ee9u, m\u1ed9t s\u1ed1 kho\u00e1 h\u1ecdc c\u00f3 th\u1ec3 \u0111\u01b0\u1ee3c thi\u1ebft k\u1ebf kh\u00e1c nhau. Stanford kh\u00f4ng s\u1eed d\u1ee5ng th\u00f4ng tin v\u1ec1 h\u1ecdc vi\u00ean v\u00e0o b\u1ea5t k\u1ef3 m\u1ee5c \u0111\u00edch g\u00ec kh\u00e1c ngo\u00e0i vi\u1ec7c \u0111\u00f3ng g\u00f3p v\u00e0o s\u1ee9 m\u1ec7nh nghi\u00ean c\u1ee9u v\u00e0 \u0111\u00e0o t\u1ea1o c\u1ee7a tr\u01b0\u1eddng. \u0110\u1ec3 nghi\u00ean c\u1ee9u, ch\u00fang t\u00f4i c\u00f3 th\u1ec3 s\u1ebd chia s\u1ebb th\u00f4ng tin thu \u0111\u01b0\u1ee3c t\u1eeb c\u00e1c ho\u1ea1t \u0111\u1ed9ng \u0111\u00e0o t\u1ea1o, bao g\u1ed3m%(link_start)s v\u00e0 c\u00e1c th\u00f4ng tin c\u00e1 nh\u00e2n v\u1ec1 h\u1ecdc vi\u00ean %(link_end)s, v\u1edbi c\u00e1c nh\u00e0 nghi\u00ean c\u1ee9u ngo\u00e0i Stanford. Tuy nhi\u00ean, nh\u1eefng th\u00f4ng tin c\u00e1 nh\u00e2n c\u1ee7a h\u1ecdc vi\u00ean s\u1ebd ch\u1ec9 \u0111\u01b0\u1ee3c chia s\u1ebb theo quy \u0111\u1ecbnh c\u1ee7a ph\u00e1p lu\u1eadt, v\u00e0 ch\u1ec9 gi\u1edbi h\u1ea1n t\u1edbi c\u00e1c th\u00f4ng tin ph\u1ee5c v\u1ee5 m\u1ee5c \u0111\u00edch nghi\u00ean c\u1ee9u, v\u00e0 s\u1ebd ph\u1ea3i tu\u00e2n theo c\u00e1c quy \u0111\u1ecbnh ch\u1eb7t ch\u1ebd v\u1ec1 b\u1ea3o m\u1eadt th\u00f4ng tin. Ch\u00fang t\u00f4i c\u00f3 th\u1ec3 s\u1ebd chia s\u1ebb v\u1edbi b\u00ean th\u1ee9 3 ho\u1eb7c c\u00f4ng b\u1ed1 m\u1ed9t s\u1ed1 th\u00f4ng tin kh\u00f4ng li\u00ean quan \u0111\u1ebfn \u0111\u1ecbnh danh c\u1ee7a h\u1ecdc vi\u00ean. T\u01b0\u01a1ng t\u1ef1, c\u00e1c t\u1ed5ng h\u1ee3p k\u1ebft qu\u1ea3 nghi\u00ean c\u1ee9u s\u1ebd kh\u00f4ng \u0111\u1ec1 c\u1eadp \u0111\u1ebfn th\u00f4ng tin \u0111\u1ecbnh danh c\u1ee7a h\u1ecdc vi\u00ean.", 
-    "By: Community TA": "B\u1edfi: C\u1ed9ng \u0111\u1ed3ng", 
-    "By: Staff": "B\u1edfi: Gi\u1ea3ng vi\u00ean", 
+    "By registering as an online learner, you are also participating in research intended to enhance Stanford's instructional offerings as well as the quality of learning and related sciences worldwide. In the interest of research, you may be exposed to some variations in the course materials. Stanford does not use learner data for any purpose beyond the University's stated missions of education and research. For purposes of research, we may share information we collect from online learning activities, including %(link_start)sPersonally Identifiable Information%(link_end)s, with researchers beyond Stanford. However, your Personally Identifiable Information will only be shared as permitted by applicable law, will be limited to what is necessary to perform the research, and will be subject to an agreement to protect the data. We may also share with the public or third parties aggregated information that does not personally identify you. Similarly, any research findings will be reported at the aggregate level and will not expose your personal identity.": "B\u1eb1ng c\u00e1ch \u0111\u0103ng k\u00fd h\u1ecdc tr\u1ef1c tuy\u1ebfn, b\u1ea1n c\u0169ng tham gia nghi\u00ean c\u1ee9u nh\u1eb1m c\u1ea3i thi\u1ec7n c\u00e1c ch\u01b0\u01a1ng tr\u00ecnh h\u1ecdc c\u1ee7a Stanford c\u0169ng nh\u01b0 ch\u1ea5t l\u01b0\u1ee3ng h\u1ecdc v\u00e0 c\u00e1c m\u00f4n khoa h\u1ecdc li\u00ean quan tr\u00ean to\u00e0n th\u1ebf gi\u1edbi. V\u00ec l\u1ee3i \u00edch c\u1ee7a nghi\u00ean c\u1ee9u, b\u1ea1n c\u00f3 th\u1ec3 ti\u1ebfp x\u00fac v\u1edbi m\u1ed9t s\u1ed1 bi\u1ebfn th\u1ec3 c\u1ee7a c\u00e1c t\u00e0i li\u1ec7u trong kh\u00f3a h\u1ecdc. Stanford kh\u00f4ng s\u1eed d\u1ee5ng d\u1eef li\u1ec7u c\u1ee7a h\u1ecdc vi\u00ean ph\u1ee5c v\u1ee5 b\u1ea5t k\u1ef3 m\u1ee5c \u0111\u00edch n\u00e0o ngo\u00e0i c\u00e1c s\u1ee9 m\u1ec7nh v\u1ec1 gi\u00e1o d\u1ee5c v\u00e0 nghi\u00ean c\u1ee9u nh\u01b0 \u0111\u00e3 \u0111\u01b0\u1ee3c n\u00eau r\u00f5 c\u1ee7a nh\u00e0 tr\u01b0\u1eddng. V\u00ec m\u1ee5c \u0111\u00edch nghi\u00ean c\u1ee9u, ch\u00fang t\u00f4i c\u00f3 th\u1ec3 chia s\u1ebb th\u00f4ng tin ch\u00fang t\u00f4i thu th\u1eadp t\u1eeb c\u00e1c ho\u1ea1t \u0111\u1ed9ng h\u1ecdc t\u1eadp tr\u1ef1c tuy\u1ebfn, bao g\u1ed3m %(link_start)sTh\u00f4ng Tin Nh\u1eadn D\u1ea1ng C\u00e1 Nh\u00e2n%(link_end)s, v\u1edbi c\u00e1c nh\u00e0 nghi\u00ean c\u1ee9u b\u00ean ngo\u00e0i Stanford. Tuy nhi\u00ean, Th\u00f4ng Tin Nh\u1eadn D\u1ea1ng C\u00e1 Nh\u00e2n c\u1ee7a b\u1ea1n s\u1ebd ch\u1ec9 \u0111\u01b0\u1ee3c chia s\u1ebb khi lu\u1eadt ph\u00e1p hi\u1ec7n h\u00e0nh cho ph\u00e9p, s\u1ebd gi\u1edbi h\u1ea1n \u1edf nh\u1eefng n\u1ed9i dung c\u1ea7n thi\u1ebft \u0111\u1ec3 ti\u1ebfn h\u00e0nh nghi\u00ean c\u1ee9u, v\u00e0 s\u1ebd tu\u00e2n th\u1ee7 m\u1ed9t th\u1ecfa thu\u1eadn b\u1ea3o v\u1ec7 d\u1eef li\u1ec7u. Ch\u00fang t\u00f4i c\u0169ng c\u00f3 th\u1ec3 chia s\u1ebb th\u00f4ng tin t\u1ed5ng h\u1ee3p kh\u00f4ng nh\u1eadn d\u1ea1ng c\u00e1 nh\u00e2n b\u1ea1n v\u1edbi c\u00f4ng ch\u00fang ho\u1eb7c c\u00e1c b\u00ean th\u1ee9 ba. T\u01b0\u01a1ng t\u1ef1, b\u1ea5t k\u1ef3 k\u1ebft lu\u1eadn nghi\u00ean c\u1ee9u n\u00e0o s\u1ebd \u0111\u01b0\u1ee3c b\u00e1o c\u00e1o \u1edf c\u1ea5p t\u1ed5ng h\u1ee3p v\u00e0 s\u1ebd kh\u00f4ng \u0111\u1ec3 l\u1ed9 danh t\u00ednh c\u00e1 nh\u00e2n c\u1ee7a b\u1ea1n.", 
+    "By: Community TA": "B\u1edfi: C\u1ed9ng \u0110\u1ed3ng Tr\u1ee3 Gi\u1ea3ng", 
+    "By: Staff": "B\u1edfi: Nh\u00e2n vi\u00ean", 
     "Can we match the photo you took with the one on your ID?": "Ch\u00fang ta c\u00f3 th\u1ec3 ph\u00f9 h\u1ee3p v\u1edbi h\u00ecnh \u1ea3nh m\u00e0 b\u1ea1n \u0111\u00e3 c\u00f3 m\u1ed9t trong nh\u1eefng ID c\u1ee7a b\u1ea1n?", 
     "Cancel": "H\u1ee7y b\u1ecf", 
     "Cancel enrollment code": "Hu\u1ef7 m\u00e3 ghi danh ", 
@@ -337,7 +337,7 @@
     "Edit Membership": "ch\u1ec9nh s\u1eeda th\u00e0nh vi\u00ean", 
     "Edit Team": "Ch\u1ec9nh s\u1eeda nh\u00f3m", 
     "Edit Your Name": "Ch\u1ec9nh s\u1eeda t\u00ean c\u1ee7a b\u1ea1n", 
-    "Edit post title": "Ch\u1ec9nh s\u1eeda ti\u00eau \u0111\u1ec1 b\u00e0i \u0111\u0103ng", 
+    "Edit post title": "Ch\u1ec9nh s\u1eeda ti\u00eau \u0111\u1ec1 b\u00e0i vi\u1ebft", 
     "Editable": "Ch\u1ec9nh s\u1eeda \u0111\u01b0\u1ee3c", 
     "Editing comment": "\u0110ang ch\u1ec9nh s\u1eeda b\u00ecnh lu\u1eadn", 
     "Editing post": "\u0110ang ch\u1ec9nh s\u1eeda b\u00e0i vi\u1ebft", 
@@ -419,7 +419,7 @@
     "Finish": "Ho\u00e0n t\u1ea5t", 
     "Focus in on specific topics": "T\u1eadp trung v\u00e0o c\u00e1c ch\u1ee7 \u0111\u1ec1 c\u1ee5 th\u1ec3", 
     "Follow": "Theo d\u00f5i", 
-    "Follow posts for updates": "Theo d\u00f5i c\u1eadp nh\u1eadt c\u1ee7a c\u00e1c b\u00e0i \u0111\u0103ng", 
+    "Follow posts for updates": "Theo d\u00f5i c\u1eadp nh\u1eadt c\u1ee7a c\u00e1c b\u00e0i vi\u1ebft", 
     "Following": "\u0110ang theo d\u00f5i", 
     "Font Family": "H\u1ecd font", 
     "Font Sizes": "K\u00edch th\u01b0\u1edbc font", 
@@ -535,7 +535,7 @@
     "Live view of webcam": "H\u00ecnh \u1ea3nh th\u1ef1c t\u1ebf tr\u00ean webcam", 
     "Load all responses": "T\u1ea3i t\u1ea5t c\u1ea3 c\u00e1c ph\u1ea3n h\u1ed3i", 
     "Load more": "T\u1ea3i th\u00eam", 
-    "Load next %(numResponses)s responses": "T\u1ea3i %(numResponses)s k\u1ebft qu\u1ea3 ti\u1ebfp theo.", 
+    "Load next %(numResponses)s responses": "T\u1ea3i %(numResponses)s ph\u1ea3n h\u1ed3i ti\u1ebfp theo", 
     "Load next %(num_items)s result": [
       "T\u1ea3i k\u1ebft qu\u1ea3 %(num_items)s  ti\u1ebfp theo"
     ], 
@@ -657,12 +657,12 @@
     "Please enter your %(field)s.": "Vui l\u00f2ng nh\u1eadp %(field)s.", 
     "Please enter your email address below and we will send you instructions for setting a new password.": "Vui l\u00f2ng nh\u1eadp \u0111\u1ecba ch\u1ec9 email c\u1ee7a b\u1ea1n d\u01b0\u1edbi \u0111\u00e2y v\u00e0 ch\u00fang t\u00f4i s\u1ebd g\u1eedi cho b\u1ea1n c\u00e1c h\u01b0\u1edbng d\u1eabn \u0111\u1ec3 thi\u1ebft l\u1eadp m\u1ed9t m\u1eadt kh\u1ea9u m\u1edbi.", 
     "Please print this page for your records; it serves as your receipt. You will also receive an email with the same information.": "H\u00e3y in trang n\u00e0y \u0111\u1ec3 l\u01b0u tr\u1eef, n\u00f3 ph\u1ee5c v\u1ee5 nh\u01b0 l\u00e0 bi\u00ean lai c\u1ee7a b\u1ea1n. B\u1ea1n c\u0169ng s\u1ebd nh\u1eadn \u0111\u01b0\u1ee3c m\u1ed9t email v\u1edbi c\u00e1c th\u00f4ng tin t\u01b0\u01a1ng t\u1ef1.", 
-    "Please read our %(link_start)sPrivacy Policy%(link_end)s for more information regarding the processing, transmission and use of data collected through the Stanford Online website and Stanford's Lagunita platform.": "Xin vui l\u00f2ng \u0111\u1ecdc th\u00f4ng tin trong \u0111\u01b0\u1eddng d\u1eabn %(link_start)s Ch\u00ednh s\u00e1ch b\u1ea3o m\u1eadt th\u00f4ng tin %(link_end)s \u0111\u1ec3 c\u00f3 th\u00eam th\u00f4ng tin v\u1ec1 qu\u00e1 tr\u00ecnh x\u1eed l\u00fd, chuy\u1ec3n v\u00e0 s\u1eed d\u1ee5ng s\u1ed1 li\u1ec7u thu th\u1eadp t\u1eeb trang web \u0110\u00e0o t\u1ea1o qua m\u1ea1ng t\u1ea1i Stanford v\u00e0 n\u1ec1n t\u1ea3ng Lagunita.", 
+    "Please read our %(link_start)sPrivacy Policy%(link_end)s for more information regarding the processing, transmission and use of data collected through the Stanford Online website and Stanford's Lagunita platform.": "Vui l\u00f2ng \u0111\u1ecdc %(link_start)sCh\u00ednh S\u00e1ch v\u1ec1 Quy\u1ec1n Ri\u00eang T\u01b0%(link_end)s c\u1ee7a ch\u00fang t\u00f4i cho vi\u1ec7c x\u1eed l\u00fd, truy\u1ec1n g\u1eedi v\u00e0 s\u1eed d\u1ee5ng d\u1eef li\u1ec7u \u0111\u01b0\u1ee3c thu th\u1eadp th\u00f4ng qua trang web Stanford Online v\u00e0 n\u1ec1n \u1ee9ng d\u1ee5ng Lagunita c\u1ee7a Stanford.", 
     "Please verify that you have uploaded a valid image (PNG and JPEG).": "Xin h\u00e3y ch\u1eafc ch\u1eafn r\u1eb1ng b\u1ea1n \u0111\u00e3 ch\u1ecdn \u1ea3nh \u0111\u00fang \u0111\u1ecbnh d\u1ea1ng (PNG ho\u1eb7c JPEG).", 
     "Please verify that your webcam is connected and that you have allowed your browser to access it.": "H\u00e3y ki\u1ec3m tra xem webcam \u0111\u00e3 \u0111\u01b0\u1ee3c k\u1ebft n\u1ed1i v\u00e0 tr\u00ecnh duy\u1ec7t \u0111\u00e3 \u0111\u01b0\u1ee3c cho ph\u00e9p d\u00f9ng webcam ch\u01b0a?", 
     "Post a response:": "\u0110\u0103ng ph\u1ea3n h\u1ed3i:", 
     "Post body": "Ph\u1ea7n th\u00e2n b\u00e0i", 
-    "Post type:": "Lo\u1ea1i b\u00e0i \u0111\u0103ng:", 
+    "Post type:": "Lo\u1ea1i b\u00e0i vi\u1ebft:", 
     "Poster": "Poster", 
     "Pre": "Pre", 
     "Preferred Language": "Ng\u00f4n ng\u1eef \u01b0a th\u00edch", 
@@ -711,7 +711,7 @@
     "Required field": "ph\u1ea7n b\u1eaft bu\u1ed9c", 
     "Required field.": "Th\u00f4ng tin b\u1eaft bu\u1ed9c.", 
     "Rescore problem '<%= problem_id %>' for all students?": "Ch\u1ea5m l\u1ea1i c\u00e2u h\u1ecfi '<%= problem_id %>' cho t\u1ea5t c\u1ea3 c\u00e1c h\u1ecdc vi\u00ean?", 
-    "Reset Password": "C\u00e0i \u0111\u1eb7t l\u1ea1i m\u1eadt kh\u1ea9u", 
+    "Reset Password": "\u0110\u1eb7t L\u1ea1i M\u1eadt Kh\u1ea9u", 
     "Reset attempts for all students on problem '<%= problem_id %>'?": "T\u00e1i thi\u1ebft l\u1eadp s\u1ed1 l\u1ea7n c\u00f3 quy\u1ec1n n\u1ed9p b\u00e0i c\u1ee7a t\u1ea5t c\u1ea3 c\u00e1c h\u1ecdc vi\u00ean cho c\u00e2u h\u1ecfi '<%= problem_id %>'?", 
     "Reset my password": "Thi\u1ebft l\u1eadp l\u1ea1i m\u1eadt kh\u1ea9u c\u1ee7a m\u00ecnh", 
     "Reset your Password": "C\u00e0i \u0111\u1eb7t l\u1ea1i m\u1eadt kh\u1ea9u c\u1ee7a b\u1ea1n", 
@@ -875,7 +875,7 @@
     "The grading process is still running. Refresh the page to see updates.": "\u0110ang trong qu\u00e1 tr\u00ecnh ch\u1ea5m \u0111i\u1ec3m. Refresh l\u1ea1i trang \u0111\u1ec3 xem c\u1eadp nh\u1eadt m\u1edbi.", 
     "The language that team members primarily use to communicate with each other.": "Ng\u00f4n ng\u1eef m\u00e0 th\u00e0nh vi\u00ean nh\u00f3m s\u1eed d\u1ee5ng ch\u00ednh \u0111\u1ec3 giao ti\u1ebfp v\u1edbi nhau.", 
     "The language used throughout this site. This site is currently available in a limited number of languages.": "Hi\u1ec7n nay Ki\u1ebfn H\u1ecdc ch\u1ec9 h\u1ed7 tr\u1ee3 ti\u1ebfng Vi\u1ec7t.", 
-    "The name that appears on your Statements of Accomplishment. Other learners never see your full name.": "H\u1ecd v\u00e0 t\u00ean s\u1ebd xu\u1ea5t hi\u1ec7n trong Ch\u1ee9ng nh\u1eadn ho\u00e0n th\u00e0nh kho\u00e1 h\u1ecdc c\u1ee7a b\u1ea1n. C\u00e1c h\u1ecdc vi\u00ean kh\u00e1c s\u1ebd kh\u00f4ng nh\u00ecn th\u1ea5y h\u1ecd t\u00ean \u0111\u1ea7y \u0111\u1ee7 c\u1ee7a b\u1ea1n", 
+    "The name that appears on your Statements of Accomplishment. Other learners never see your full name.": "H\u1ecd v\u00e0 t\u00ean s\u1ebd xu\u1ea5t hi\u1ec7n trong Ch\u1ee9ng Nh\u1eadn Ho\u00e0n Th\u00e0nh Ch\u1ee9ng c\u1ee7a b\u1ea1n. C\u00e1c h\u1ecdc vi\u00ean kh\u00e1c s\u1ebd kh\u00f4ng nh\u00ecn th\u1ea5y h\u1ecd t\u00ean \u0111\u1ea7y \u0111\u1ee7 c\u1ee7a b\u1ea1n.", 
     "The name that identifies you throughout {platform_name}. You cannot change your username.": "T\u00ean \u0111\u0103ng nh\u1eadp cho {platform_name}. B\u1ea1n kh\u00f4ng th\u1ec3 thay \u0111\u1ed5i t\u00ean \u0111\u0103ng nh\u1eadp.", 
     "The photo of your face matches the photo on your ID.": "Nh\u1eefng h\u00ecnh \u1ea3nh c\u1ee7a khu\u00f4n m\u1eb7t c\u1ee7a b\u1ea1n ph\u00f9 h\u1ee3p v\u1edbi h\u00ecnh \u1ea3nh tr\u00ean ID c\u1ee7a b\u1ea1n.", 
     "The selected content group does not exist": "N\u1ed9i dung cho nh\u00f3m h\u1ecdc \u0111\u01b0\u1ee3c ch\u1ecdn kh\u00f4ng t\u1ed3n t\u1ea1i", 
@@ -920,7 +920,7 @@
     "Tools": "C\u00f4ng c\u1ee5", 
     "Top": "\u0110\u1ec9nh", 
     "Topic": "Ch\u1ee7 \u0111\u1ec1", 
-    "Topic Area:": "Ch\u1ee7 \u0111\u1ec1", 
+    "Topic Area:": "Ch\u1ee7 \u0111\u1ec1:", 
     "Topics": "C\u00e1c ch\u1ee7 \u0111\u1ec1", 
     "Total": "T\u1ed5ng c\u1ed9ng", 
     "Try using a different browser, such as Google Chrome.": "Th\u1eed s\u1eed d\u1ee5ng m\u1ed9t tr\u00ecnh duy\u1ec7t kh\u00e1c, nh\u01b0 Google Chrome.", 
@@ -962,7 +962,7 @@
     "Uploading": "\u0110ang t\u1ea3i l\u00ean", 
     "Upper Alpha": "Ch\u1eef c\u00e1i vi\u1ebft hoa", 
     "Upper Roman": "Ch\u1eef c\u00e1i La M\u00e3 vi\u1ebft hoa", 
-    "Upvote posts and good responses": "C\u00e1c b\u00e0i \u0111\u0103ng c\u00f3 ph\u1ea3n h\u1ed3i t\u1ed1t", 
+    "Upvote posts and good responses": "C\u00e1c b\u00e0i vi\u1ebft c\u00f3 ph\u1ea3n h\u1ed3i t\u1ed1t", 
     "Url": "Url", 
     "Use bookmarks to help you easily return to courseware pages. To bookmark a page, select Bookmark in the upper right corner of that page. To see a list of all your bookmarks, select Bookmarks in the upper left corner of any courseware page.": "S\u1eed d\u1ee5ng \u0111\u00e1nh d\u1ea5u trang \u0111\u1ec3 b\u1ea1n c\u00f3 th\u1ec3 d\u1ec5 d\u00e0ng quay l\u1ea1i c\u00e1c trang. \u0110\u1ec3 \u0111\u00e1nh d\u1ea5u 1 trang, h\u00e3y ch\u1ecdn \u0110\u00e1nh d\u1ea5u t\u1ea1i g\u00f3c ph\u00eda tr\u00ean b\u00ean ph\u1ea3i c\u1ee7a trang \u0111\u00f3. \u0110\u1ec3 xem danh m\u1ee5c c\u00e1c trang \u0111\u00e3 \u0111\u00e1nh d\u1ea5u, h\u00e3y ch\u1ecdn \u0110\u00e1nh d\u1ea5u t\u1ea1i g\u00f3c ph\u00eda tr\u00ean b\u00ean tr\u00e1i c\u1ee7a trang. ", 
     "Use my institution/campus credentials": "S\u1eed d\u1ee5ng t\u1ed5 ch\u1ee9c / th\u00f4ng tin tr\u01b0\u1eddng c\u1ee7a t\u00f4i", 
@@ -1008,27 +1008,27 @@
     "We couldn't create your account.": "Kh\u00f4ng th\u1ec3 t\u1ea1o t\u00e0i kho\u1ea3n c\u1ee7a b\u1ea1n.", 
     "We couldn't find any results for \"%s\".": "Kh\u00f4ng th\u1ec3 t\u00ecm th\u1ea5y k\u1ebft qu\u1ea3 cho \"%s\".", 
     "We couldn't sign you in.": "B\u1ea1n kh\u00f4ng th\u1ec3 \u0111\u0103ng nh\u1eadp.", 
-    "We had some trouble closing this thread.  Please try again.": "C\u00f3 l\u1ed7i k\u1ef9 thu\u1eadt khi \u0111\u00f3ng ch\u1ee7 \u0111\u1ec1 n\u00e0y. Xin vui l\u00f2ng th\u1eed l\u1ea1i", 
+    "We had some trouble closing this thread.  Please try again.": "C\u00f3 l\u1ed7i k\u1ef9 thu\u1eadt khi \u0111\u00f3ng ch\u1ee7 \u0111\u1ec1 n\u00e0y. Xin vui l\u00f2ng th\u1eed l\u1ea1i.", 
     "We had some trouble deleting this comment. Please try again.": "C\u00f3 l\u1ed7i k\u1ef9 thu\u1eadt khi xo\u00e1 b\u00ecnh lu\u1eadn n\u00e0y. Xin vui l\u00f2ng t\u1ea3i l\u1ea1i.", 
     "We had some trouble loading more responses. Please try again.": "C\u00f3 l\u1ed7i k\u1ef9 thu\u1eadt khi t\u1ea3i th\u00eam k\u1ebft qu\u1ea3. Xin vui l\u00f2ng t\u1ea3i l\u1ea1i.", 
-    "We had some trouble loading more threads. Please try again.": "C\u00f3 l\u1ed7i k\u1ef9 thu\u1eadt khi t\u1ea3i th\u00eam ch\u1ee7 \u0111\u1ec3. Xin vui l\u00f2ng th\u1eed l\u1ea1i", 
+    "We had some trouble loading more threads. Please try again.": "C\u00f3 l\u1ed7i k\u1ef9 thu\u1eadt khi t\u1ea3i th\u00eam ch\u1ee7 \u0111\u1ec3. Xin vui l\u00f2ng th\u1eed l\u1ea1i.", 
     "We had some trouble loading responses. Please reload the page.": "C\u00f3 l\u1ed7i k\u1ef9 thu\u1eadt khi t\u1ea3i. Xin vui l\u00f2ng t\u1ea3i l\u1ea1i trang n\u00e0y.", 
     "We had some trouble loading the discussion. Please try again.": "C\u00f3 l\u1ed7i k\u1ef9 thu\u1eadt khi t\u1ea3i ph\u1ea7n th\u1ea3o lu\u1eadn. XIn vui l\u00f2ng th\u1eed l\u1ea1i.", 
     "We had some trouble loading the page you requested. Please try again.": "C\u00f3 l\u1ed7i k\u1ef9 thu\u1eadt khi t\u1ea3i trang b\u1ea1n y\u00eau c\u1ea7u. Xin vui l\u00f2ng th\u1eed l\u1ea1i.", 
     "We had some trouble loading the threads you requested. Please try again.": "C\u00f3 l\u1ed7i k\u1ef9 thu\u1eadt khi t\u1ea3i ph\u1ea7n b\u1ea1n y\u00eau c\u1ea7u. Xin vui l\u00f2ng th\u1eed l\u1ea1i.", 
-    "We had some trouble marking this response as an answer.  Please try again.": "C\u00f3 l\u1ed7i k\u1ef9 thu\u1eadt trong vi\u1ec7c nh\u1eadn c\u00e2u tr\u1ea3 l\u1eddi. Xin vui l\u00f2ng th\u1eed l\u1ea1i", 
-    "We had some trouble marking this response endorsed.  Please try again.": "C\u00f3 l\u1ed7i k\u1ef9 thu\u1eadt khi x\u00e1c nh\u1eadn c\u00e2u tr\u1ea3 l\u1eddi. Xin vui l\u00f2ng th\u1eed l\u1ea1i", 
-    "We had some trouble pinning this thread. Please try again.": "C\u00f3 l\u1ed7i k\u1ef9 thu\u1eadt khi g\u1eafn ch\u1ee7 \u0111\u1ec1 n\u00e0y. Xin vui l\u00f2ng th\u1eed l\u1ea1i", 
+    "We had some trouble marking this response as an answer.  Please try again.": "C\u00f3 l\u1ed7i k\u1ef9 thu\u1eadt trong vi\u1ec7c nh\u1eadn c\u00e2u tr\u1ea3 l\u1eddi. Xin vui l\u00f2ng th\u1eed l\u1ea1i.", 
+    "We had some trouble marking this response endorsed.  Please try again.": "C\u00f3 l\u1ed7i k\u1ef9 thu\u1eadt khi x\u00e1c nh\u1eadn c\u00e2u tr\u1ea3 l\u1eddi. Xin vui l\u00f2ng th\u1eed l\u1ea1i.", 
+    "We had some trouble pinning this thread. Please try again.": "C\u00f3 l\u1ed7i k\u1ef9 thu\u1eadt khi g\u1eafn ch\u1ee7 \u0111\u1ec1 n\u00e0y. Xin vui l\u00f2ng th\u1eed l\u1ea1i.", 
     "We had some trouble processing your request. Please ensure you have copied any unsaved work and then reload the page.": "C\u00f3 l\u1ed7i k\u1ef9 thu\u1eadt khi x\u1eed l\u00fd y\u00eau c\u1ea7u c\u1ee7a b\u1ea1n. H\u00e3y ch\u1eafc ch\u1eafn b\u1ea1n \u0111\u00e3 sao ch\u00e9p c\u00e1c ho\u1ea1t \u0111\u1ed9ng ch\u01b0a \u0111\u01b0\u1ee3c l\u01b0u v\u00e0 sau \u0111\u00f3 t\u1ea3i l\u1ea1i trang.", 
     "We had some trouble processing your request. Please try again.": "C\u00f3 l\u1ed7i k\u1ef9 thu\u1eadt khi x\u1eed l\u00fd y\u00eau c\u1ea7u c\u1ee7a b\u1ea1n. Xin vui l\u00f2ng th\u1eed l\u1ea1i.", 
-    "We had some trouble removing this endorsement.  Please try again.": "C\u00f3 l\u1ed7i k\u1ef9 thu\u1eadt khi hu\u1ef7 vi\u1ec7c x\u00e1c nh\u1eadn c\u00e2u tr\u1ea3 l\u1eddi. Xin vui l\u00f2ng th\u1eed l\u1ea1i", 
-    "We had some trouble removing this response as an answer.  Please try again.": "C\u00f3 l\u1ed7i k\u1ef9 thu\u1eadt khi hu\u1ef7 c\u00e2u tr\u1ea3 l\u1eddi. Xin vui l\u00f2ng th\u1eed l\u1ea1i", 
-    "We had some trouble removing your flag on this post.  Please try again.": "C\u00f3 l\u1ed7i k\u1ef9 thu\u1eadt khi hu\u1ef7 b\u1ecf l\u1ec7nh g\u1eafn c\u1edd c\u1ee7a b\u1ea1n trong b\u00e0i \u0111\u0103ng n\u00e0y. Xin vui l\u00f2ng th\u1eed l\u1ea1i", 
-    "We had some trouble reopening this thread.  Please try again.": "C\u00f3 l\u1ed7i k\u1ef9 thu\u1eadt khi m\u1edf l\u1ea1i ch\u1ee7 \u0111\u1ec1 n\u00e0y. Xin vui l\u00f2ng th\u1eed l\u1ea1i", 
-    "We had some trouble reporting this post.  Please try again.": "C\u00f3 l\u1ed7i k\u1ef9 thu\u1eadt khi b\u00e1o c\u00e1o b\u00e0i \u0111\u0103ng n\u00e0y. Xin vui l\u00f2ng th\u1eed l\u1ea1i", 
-    "We had some trouble saving your vote.  Please try again.": "C\u00f3 l\u1ed7i k\u1ef9 thu\u1eadt khi l\u01b0u l\u1ea1i phi\u1ebfu b\u1ea7u c\u1ee7a b\u1ea1n. Xin vui l\u00f2ng th\u1eed l\u1ea1i", 
+    "We had some trouble removing this endorsement.  Please try again.": "C\u00f3 l\u1ed7i k\u1ef9 thu\u1eadt khi hu\u1ef7 vi\u1ec7c x\u00e1c nh\u1eadn c\u00e2u tr\u1ea3 l\u1eddi. Xin vui l\u00f2ng th\u1eed l\u1ea1i.", 
+    "We had some trouble removing this response as an answer.  Please try again.": "C\u00f3 l\u1ed7i k\u1ef9 thu\u1eadt khi hu\u1ef7 c\u00e2u tr\u1ea3 l\u1eddi. Xin vui l\u00f2ng th\u1eed l\u1ea1i.", 
+    "We had some trouble removing your flag on this post.  Please try again.": "C\u00f3 l\u1ed7i k\u1ef9 thu\u1eadt khi hu\u1ef7 b\u1ecf l\u1ec7nh g\u1eafn c\u1edd c\u1ee7a b\u1ea1n trong b\u00e0i \u0111\u0103ng n\u00e0y. Xin vui l\u00f2ng th\u1eed l\u1ea1i.", 
+    "We had some trouble reopening this thread.  Please try again.": "C\u00f3 l\u1ed7i k\u1ef9 thu\u1eadt khi m\u1edf l\u1ea1i ch\u1ee7 \u0111\u1ec1 n\u00e0y. Xin vui l\u00f2ng th\u1eed l\u1ea1i.", 
+    "We had some trouble reporting this post.  Please try again.": "C\u00f3 l\u1ed7i k\u1ef9 thu\u1eadt khi b\u00e1o c\u00e1o b\u00e0i \u0111\u0103ng n\u00e0y. Xin vui l\u00f2ng th\u1eed l\u1ea1i.", 
+    "We had some trouble saving your vote.  Please try again.": "C\u00f3 l\u1ed7i k\u1ef9 thu\u1eadt khi l\u01b0u l\u1ea1i phi\u1ebfu b\u1ea7u c\u1ee7a b\u1ea1n. Xin vui l\u00f2ng th\u1eed l\u1ea1i.", 
     "We had some trouble subscribing you to this thread. Please try again.": "C\u00f3 l\u1ed7i k\u1ef9 thu\u1eadt khi b\u1ea1n \u0111\u0103ng k\u00fd v\u00e0o ph\u1ea7n n\u00e0y. Xin vui l\u00f2ng th\u1eed l\u1ea1i.", 
-    "We had some trouble unpinning this thread. Please try again.": "C\u00f3 l\u1ed7i k\u1ef9 thu\u1eadt khi hu\u1ef7 g\u1eafn ch\u1ee7 \u0111\u1ec1 n\u00e0y. Xin vui l\u00f2ng th\u1eed l\u1ea1i", 
+    "We had some trouble unpinning this thread. Please try again.": "C\u00f3 l\u1ed7i k\u1ef9 thu\u1eadt khi hu\u1ef7 g\u1eafn ch\u1ee7 \u0111\u1ec1 n\u00e0y. Xin vui l\u00f2ng th\u1eed l\u1ea1i.", 
     "We had some trouble unsubscribing you from this thread. Please try again.": "C\u00f3 l\u1ed7i k\u1ef9 thu\u1eadt khi hu\u1ef7 \u0111\u0103ng \u0111\u0103ng k\u00fd c\u1ee7a b\u1ea1n \u1edf ph\u1ea7n n\u00e0y. Xin vui l\u00f2ng th\u1eed l\u1ea1i.", 
     "We have received your information and are verifying your identity. You will see a message on your dashboard when the verification process is complete (usually within 1-2 days). In the meantime, you can still access all available course content.": "Ch\u00fang t\u00f4i \u0111\u00e3 nh\u1eadn \u0111\u01b0\u1ee3c th\u00f4ng tin c\u1ee7a b\u1ea1n v\u00e0 \u0111ang ti\u1ebfn x\u00e1c nh\u1eadn danh t\u00ednh c\u1ee7a b\u1ea1n. B\u1ea1n s\u1ebd th\u1ea5y m\u1ed9t tin nh\u1eafn tr\u00ean b\u1ea3ng \u0111i\u1ec1u khi\u1ec3n khi qu\u00e1 tr\u00ecnh x\u00e1c nh\u1eadn ho\u00e0n t\u1ea5t (th\u00f4ng th\u01b0\u1eddng trong v\u00f2ng 1-2 ng\u00e0y). Trong th\u1eddi gian ch\u1edd \u0111\u1ee3i, b\u1ea1n v\u00e3n c\u00f3 th\u1ec3 truy c\u1eadp n\u1ed9i dung c\u00e1c kho\u00e1 h\u1ecdc c\u00f3 s\u1eb5n.", 
     "We just need a little more information before you start learning with %(platformName)s.": "C\u1ea7n th\u00eam m\u1ed9t s\u1ed1 th\u00f4ng tin tr\u01b0\u1edbc khi b\u1ea1n b\u1eaft \u0111\u1ea7u h\u1ecdc v\u1edbi %(platformName)s.", 
@@ -1146,7 +1146,7 @@
     "strong text": "d\u00f2ng v\u0103n m\u1ea1nh", 
     "team count": "s\u1ed1 l\u01b0\u1ee3ng nh\u00f3m", 
     "there is currently %(numVotes)s vote": [
-      "hi\u1ec7n nay c\u00f3 %(numVotes)s phi\u1ebfu b\u1ea7u. "
+      "hi\u1ec7n nay c\u00f3 %(numVotes)s phi\u1ebfu b\u1ea7u"
     ], 
     "timed": "timed", 
     "unanswered question": "C\u00e2u h\u1ecfi ch\u01b0a \u0111\u01b0\u1ee3c tr\u1ea3 l\u1eddi", 

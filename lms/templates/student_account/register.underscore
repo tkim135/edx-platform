@@ -71,6 +71,17 @@
         <p class="instructions"><%= _.sprintf( gettext("Please read our %(link_start)sPrivacy Policy%(link_end)s for more information regarding the processing, transmission and use of data collected through the Stanford Online website and Stanford's Lagunita platform."), {link_start:'<a href="/tos#privacy"><strong>', link_end:'</strong></a>'} ) %>
         </p>
     <% } %>
+    <% if (context.themeName === 'cme') { %>
+        <fieldset>
+            <legend>&dagger; Medical Designation or Professional Title</legend>
+            <p class="instructions">
+                DO; MD; MD, PhD; MBBS =
+                <em><strong><%- gettext("AMA PRA Category 1 Credit (TM)") %></strong></em>
+                <br />
+                <%- gettext("All Other Designations = Attendance Credit") %>
+            </p>
+        </fieldset>
+    <% } %>
 
     <button type="submit" class="action action-primary action-update js-register register-button"><%- gettext("Create your account") %></button>
     <p class="note">* <%- gettext("Required field") %></p>

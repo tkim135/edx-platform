@@ -8,9 +8,9 @@ from django.conf import settings
 
 from edxnotes.helpers import is_feature_enabled as is_edxnotes_enabled
 
-from student.models import UserProfile
+from student.models import UserProfi
 
-from openedx.core.djangolib.markup import HTML, Text
+from openedx.core.djangolib.markup import HTML
 from openedx.core.djangolib.js_utils import js_escaped_string
 %>
 <%
@@ -204,10 +204,10 @@ ${HTML(fragment.foot_html())}
   </div>
   % if course and user.is_authenticated() and not UserProfile.has_registered(user):
     <div class="unauth-tos">
-      ${Text(_("By exploring the course, you are agreeing to our {tos_link_start}Terms of Service{link_end} and {privacy_link_start}Privacy Policy{link_end}. Please read them carefully.")).format(
-        tos_link_start=HTML('<a href="https://lagunita.stanford.edu/tos">'),
-        privacy_link_start=HTML('<a href="https://lagunita.stanford.edu/tos#privacy">'),
-        link_end=HTML('</a>')
+      ${_("By exploring the course, you are agreeing to our {tos_link_start}Terms of Service{link_end} and {privacy_link_start}Privacy Policy{link_end}. Please read them carefully.").format(
+        tos_link_start='<a href="https://lagunita.stanford.edu/tos">',
+        privacy_link_start='<a href="https://lagunita.stanford.edu/tos#privacy">',
+        link_end='</a>'
       )}
     </div>
   % endif

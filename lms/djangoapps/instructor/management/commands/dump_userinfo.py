@@ -8,6 +8,7 @@ from optparse import make_option
 import sys
 import tempfile
 
+from django.conf import settings
 from django.core.management.base import BaseCommand, CommandError
 from pytz import UTC
 
@@ -53,6 +54,39 @@ PROFILE_FIELDS = [
     ('user__profile__cmeuserprofile__marketing_opt_in_untracked', 'Marketing Opt-In'),
     ('user__id', '')
 ]
+if 'openedx.stanford.djangoapps.register_cme' in settings.INSTALLED_APPS:
+    PROFILE_FIELDS = [
+        ('user__extrainfo__last_name', 'Last Name'),
+        ('user__extrainfo__middle_initial', 'Middle Initial'),
+        ('user__extrainfo__first_name', 'First Name'),
+        ('user__email', 'Email Address'),
+        ('user__extrainfo__birth_date', 'Birth Date'),
+        ('user__extrainfo__professional_designation', 'Professional Designation'),
+        ('user__extrainfo__license_number', 'Professional License Number'),
+        ('user__extrainfo__license_country', 'Professional License Country'),
+        ('user__extrainfo__license_state', 'Professional License State'),
+        ('user__extrainfo__physician_status', 'Physician Status'),
+        ('user__extrainfo__patient_population', 'Patient Population'),
+        ('user__extrainfo__specialty', 'Specialty'),
+        ('user__extrainfo__sub_specialty', 'Sub Specialty'),
+        ('user__extrainfo__affiliation', 'Stanford Medicine Affiliation'),
+        ('user__extrainfo__sub_affiliation', 'Stanford Sub Affiliation'),
+        ('user__extrainfo__stanford_department', 'Stanford Department'),
+        ('user__extrainfo__sunet_id', 'SUNet ID'),
+        ('user__extrainfo__other_affiliation', 'Other Affiliation'),
+        ('user__extrainfo__job_title', 'Job Title or Position'),
+        ('user__extrainfo__address_1', 'Address 1'),
+        ('user__extrainfo__address_2', 'Address 2'),
+        ('user__extrainfo__city', 'City'),
+        ('user__extrainfo__state', 'State'),
+        ('user__extrainfo__postal_code', 'Postal Code'),
+        ('user__extrainfo__county_province', 'County/Province'),
+        ('user__extrainfo__country', 'Country'),
+        ('user__extrainfo__phone_number_untracked', 'Phone Number'),
+        ('user__profile__gender', 'Gender'),
+        ('user__extrainfo__marketing_opt_in_untracked', 'Marketing Opt-In'),
+        ('user__id', ''),
+    ]
 
 REGISTRATION_FIELDS = [
     ('system_id_untracked', 'System ID'),
@@ -176,6 +210,8 @@ class Command(BaseCommand):
         sys.stdout.write("Fetching enrolled students for {course}...".format(course=course_id))
 
         certificates, profiles, registrations, unpaid_registrations = self.query_database_for(course_id)
+        if 'openedx.stanford.djangoapps.register_cme' in settings.INSTALLED_APPS:
+            certificates, profiles, registrations, unpaid_registrations = self.query_database_for_new_app(course_id)
 
         registration_table = self.build_user_table(registrations)
         unpaid_registration_table = self.build_user_table(unpaid_registrations)
@@ -259,6 +295,22 @@ class Command(BaseCommand):
         cme_profiles = CourseEnrollment.objects.select_related('user__profile__cmeuserprofile').filter(course_id=course_id).values(
             *[field for field, label in PROFILE_FIELDS if 'untracked' not in field]
         ).order_by('user__username')
+        unpaid_registrations = CourseEnrollment.objects.filter(course_id=course_id)
+        registrations = PaidCourseRegistration.objects.filter(status='purchased', course_id=course_id)
+        certificates = GeneratedCertificate.objects.filter(course_id=course_id)
+        return certificates, cme_profiles, registrations, unpaid_registrations
+
+    def query_database_for_new_app(self, course_id):
+        cme_profiles = CourseEnrollment.objects.select_related(
+            'user__extrainfo',
+            'user__profile',
+        ).filter(
+            course_id=course_id,
+        ).values(
+            *[field for field, label in PROFILE_FIELDS if 'untracked' not in field]
+        ).order_by(
+            'user__username',
+        )
         unpaid_registrations = CourseEnrollment.objects.filter(course_id=course_id)
         registrations = PaidCourseRegistration.objects.filter(status='purchased', course_id=course_id)
         certificates = GeneratedCertificate.objects.filter(course_id=course_id)

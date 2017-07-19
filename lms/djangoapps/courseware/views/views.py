@@ -343,6 +343,13 @@ def course_info(request, course_id):
         if settings.FEATURES.get('ENABLE_MKTG_SITE'):
             url_to_enroll = marketing_link('COURSES')
 
+        sneakpeek_allowed = is_sneakpeek_allowed(request.user, course, course_key)
+        if sneakpeek_allowed:
+            registered = registered_for_course(course, request.user)
+            regularly_registered = is_regularly_registered(registered, request.user)
+        else:
+            regularly_registered = None
+
         context = {
             'request': request,
             'masquerade_user': user,
@@ -354,6 +361,8 @@ def course_info(request, course_id):
             'studio_url': studio_url,
             'show_enroll_banner': show_enroll_banner,
             'url_to_enroll': url_to_enroll,
+            'sneakpeek_allowed': sneakpeek_allowed,
+            'regularly_registered': regularly_registered,
         }
 
         # Get the URL of the user's last position in order to display the 'where you were last' message
@@ -565,11 +574,7 @@ def course_about(request, course_id):
             return redirect(reverse('info', args=[course.id.to_deprecated_string()]))
 
         registered = registered_for_course(course, request.user)
-        regularly_registered = (
-            registered
-            and
-            UserProfile.has_registered(request.user)
-        )
+        regularly_registered = is_regularly_registered(registered, request.user)
 
         staff_access = bool(has_access(request.user, 'staff', course))
         studio_url = get_studio_url(course, 'settings/details')
@@ -628,13 +633,7 @@ def course_about(request, course_id):
         # Determine which checkout workflow to use -- LMS shoppingcart or Otto basket
         can_add_course_to_cart = _is_shopping_cart_enabled and registration_price and not ecommerce_checkout_link
 
-        # only allow course sneak peek if
-        # 1) within enrollment period
-        # 2) course specifies it's okay
-        # 3) request.user is not a registered user.
-        sneakpeek_allowed = (has_access(request.user, 'within_enrollment_period', course) and
-                             CoursePreference.course_allows_nonregistered_access(course_key) and
-                             not UserProfile.has_registered(request.user))
+        sneakpeek_allowed = is_sneakpeek_allowed(request.user, course, course_key)
 
         # Used to provide context to message to student if enrollment not allowed
         can_enroll = bool(has_access(request.user, 'enroll', course))
@@ -1726,3 +1725,25 @@ def financial_assistance_form(request):
             }
         ],
     })
+
+
+def is_sneakpeek_allowed(user, course, course_key):
+    """
+    Helper method for sneakpeek.
+
+    Sneakpeek is only allowed if:
+    1) within enrollment period
+    2) course specifies it's okay
+    3) request.user is not a registered user.
+    """
+    return (has_access(user, 'within_enrollment_period', course) and
+            CoursePreference.course_allows_nonregistered_access(course_key) and
+            not UserProfile.has_registered(user))
+
+
+def is_regularly_registered(registered, user):
+    """
+    Helper method for determining if user is a sneakpeek user.
+    """
+    return (registered and
+            UserProfile.has_registered(user))

@@ -1,0 +1,26 @@
+<%!
+    from django.conf import settings
+
+    if hasattr(settings, 'INSTALLED_APPS') and 'openedx.stanford.djangoapps.register_cme' in settings.INSTALLED_APPS:
+        from openedx.stanford.djangoapps.register_cme import models
+        from openedx.stanford.djangoapps.register_cme import constants
+%>
+<%namespace name='static' file='/static_content.html'/>
+<%!
+    form = getattr(settings, 'REGISTRATION_EXTENSION_FORM', None)
+%>
+
+% if 'openedx.stanford.djangoapps.register_cme' in settings.INSTALLED_APPS:
+<div style="display:none">
+<link rel="stylesheet" type="text/css" href="${static.url('register_cme/form.css')}" />
+%for code, specialties in models.SUB_SPECIALTY_CHOICES.iteritems():
+    <select class="specialty_${code}">
+        <option value="">-----</option>
+    %for specialty in specialties:
+        <option value="${specialty[0].replace('_&_', '_')}">${specialty[1]}</option>
+    %endfor
+    </select>
+%endfor
+<script type="text/javascript" src="${static.url('register_cme/form.js')}"></script>
+</div>
+% endif

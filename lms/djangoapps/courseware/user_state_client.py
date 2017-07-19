@@ -4,6 +4,7 @@ data in a Django ORM model.
 """
 
 import itertools
+import logging
 from operator import attrgetter
 from time import time
 import logging

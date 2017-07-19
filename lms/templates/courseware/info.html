@@ -139,6 +139,9 @@ from openedx.core.djangolib.markup import HTML, Text
       % endif <!-- if course authenticated -->
       </div>
   </div>
+  % if sneakpeek_allowed and not regularly_registered:
+    <%include file="sneak_peek_tos_privacy.html" />
+  % endif
 </main>
 
 <%static:require_module_async module_name="js/dateutil_factory" class_name="DateUtilFactory">

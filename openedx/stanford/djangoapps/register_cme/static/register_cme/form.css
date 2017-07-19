@@ -1,0 +1,41 @@
+label.required:after
+{
+    content: '*';
+}
+.select-sub_affiliation,
+.select-stanford_department,
+.text-sunet_id,
+.select-sub_specialty,
+.text-other_affiliation
+{
+    display: none;
+}
+.login-register .form-field.select-gender
+{
+    width: 100%;
+}
+.form-field.select-professional_designation LABEL:after
+{
+    content: '\2020';
+}
+.login-register .form-field.text-dummy_header_professional_information input,
+.login-register .form-field.text-dummy_header_professional_contact_information input
+{
+    display: none;
+}
+.login-register .form-field.text-dummy_header_professional_information label,
+.login-register .form-field.text-dummy_header_professional_contact_information label
+{
+    font-weight: bold;
+    margin-left: -10px;
+    font-size: 1.1em;
+}
+fieldset
+{
+    border: 1px dashed #ccc;
+    padding: 10px;
+}
+fieldset label
+{
+    padding: 5px;
+}

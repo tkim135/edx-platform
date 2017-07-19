@@ -1,5 +1,8 @@
 from lms.envs.common import *
+from glob import glob
+import sys
 
+STANFORD_ROOT = REPO_ROOT / 'openedx/stanford'
 
 # Email to give anonymous users.  Should be a black-hole email address, but not cause errors when email is sent there
 # This is actually just a base email.  We'll make it 'noreply+<username>@example.com' to ensure uniqueness
@@ -65,7 +68,10 @@ INSTALLED_APPS += (
     'instructor_email_widget',
     'settings_context_processor',
     'sneakpeek_deeplink',
+    # Added here to allow translations
+    'freetextresponse',
 )
+MAKO_TEMPLATES['main'] += glob(STANFORD_ROOT / 'djangoapps/*/templates')
 MAX_ENROLLEES_FOR_METRICS_USING_DB = 100
 MIDDLEWARE_CLASSES += (
     'sneakpeek_deeplink.middleware.SneakPeekDeepLinkMiddleware',
@@ -89,6 +95,7 @@ SHIB_REDIRECT_DOMAIN_WHITELIST = {
     # (not including itself); e.g.
     # 'suclass.stanford.edu': ['studio.suclass.stanford.edu']
 }
+STATICFILES_DIRS += glob(STANFORD_ROOT / 'djangoapps/*/static')
 STUDENT_FORUMS_DOWNLOAD_ROUTING_KEY = HIGH_MEM_QUEUE
 STUDENT_RESPONSES_DOWNLOAD = {
     'STORAGE_TYPE': 'localfs',
@@ -105,6 +112,7 @@ TEMPLATE_VISIBLE_SETTINGS = [
     # These settings' values will be exposed to all templates
     'FEATURES',
 ]
+TEMPLATES[0]['DIRS'] += glob(STANFORD_ROOT / 'djangoapps/*/templates')
 TEMPLATES[0]['OPTIONS']['context_processors'] += [
     # Include TEMPLATE_VISIBLE_SETTINGS in templates
     'settings_context_processor.context_processors.settings',
