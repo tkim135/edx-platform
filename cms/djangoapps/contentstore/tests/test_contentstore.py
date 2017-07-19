@@ -14,7 +14,6 @@ from path import Path as path
 from textwrap import dedent
 from uuid import uuid4
 from functools import wraps
-from unittest import skipUnless
 from unittest import SkipTest
 
 from django.conf import settings
@@ -1999,7 +1998,6 @@ class RerunCourseTest(ContentStoreTestCase):
         rerun_of_rerun_course_key = self.post_rerun_request(rerun_course_key, rerun_of_rerun_data)
         self.verify_rerun_course(rerun_course_key, rerun_of_rerun_course_key, rerun_of_rerun_data['display_name'])
 
-    @skipUnless(settings.FEATURES.get('ALLOW_COURSE_RERUNS'), 'Course reruns not enabled')
     def test_rerun_course_fail_no_source_course(self):
         existent_course_key = CourseFactory.create().id
         non_existent_course_key = CourseLocator("org", "non_existent_course", "non_existent_run")

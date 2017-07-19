@@ -203,13 +203,7 @@ ${HTML(fragment.foot_html())}
 
   </div>
   % if course and user.is_authenticated() and not UserProfile.has_registered(user):
-    <div class="unauth-tos">
-      ${Text(_("By exploring the course, you are agreeing to our {tos_link_start}Terms of Service{link_end} and {privacy_link_start}Privacy Policy{link_end}. Please read them carefully.")).format(
-        tos_link_start=HTML('<a href="https://lagunita.stanford.edu/tos">'),
-        privacy_link_start=HTML('<a href="https://lagunita.stanford.edu/tos#privacy">'),
-        link_end=HTML('</a>')
-      )}
-    </div>
+    <%include file="sneak_peek_tos_privacy.html" />
   % endif
 </div>
 <div class="container-footer">

@@ -7,7 +7,7 @@ from xmodule.modulestore.tests.factories import CourseFactory
 
 import json
 import mock
-from .utils import CourseTestCase
+from cms.djangoapps.contentstore.tests.utils import CourseTestCase
 
 
 class UtilitiesTestCase(CourseTestCase):
