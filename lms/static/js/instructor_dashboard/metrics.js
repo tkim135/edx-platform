@@ -1,6 +1,7 @@
 (function() {
     'use strict';
     var Metrics;
+    var firstLoad = true;
 
     Metrics = (function() {
         function metrics($section) {
@@ -9,7 +10,10 @@
         }
 
         metrics.prototype.onClickTitle = function() {
-            loadGraphs();
+            if (firstLoad) {
+                loadGraphs();
+                firstLoad = false;
+            }
             $('#graph_reload').show();
             $('.metrics-header-container').show();
         };
