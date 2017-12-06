@@ -9,6 +9,7 @@ general:
 
 dependencies:
   override:
+    - pip --version
     - npm install
 
     - pip install setuptools
