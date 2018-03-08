@@ -68,6 +68,7 @@ INLINE_ANALYTICS_SUPPORTED_TYPES = {
 INSTALLED_APPS += (
     'branding_stanford',
     'openedx.stanford.lms.djangoapps.instructor',
+    'openedx.stanford.lms.djangoapps.instructor_task',
     'settings_context_processor',
     'sneakpeek_deeplink',
     # Added here to allow translations
