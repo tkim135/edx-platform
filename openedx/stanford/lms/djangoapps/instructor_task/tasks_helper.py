@@ -220,9 +220,9 @@ def _push_csv_responses_to_s3(csv_fn, filename, course_id, action_name):
         header, datarows = csv_fn(course_id)
         rows = [header] + [row for row in datarows]
     # Update progress to failed regardless of error type
-    # pylint: disable=bare-except
-    except:
+    except Exception as e:
         num_failed = 1
+        TASK_LOG.error(e)
         update_task_progress()
         return UPDATE_STATUS_FAILED
     timestamp_str = start_time.strftime('%Y-%m-%d-%H%M')
