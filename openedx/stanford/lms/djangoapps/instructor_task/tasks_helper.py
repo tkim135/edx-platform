@@ -2,6 +2,7 @@ from bson.son import SON
 from datetime import datetime
 from datetime import date
 from itertools import chain
+import json
 import logging
 from textwrap import dedent
 import urllib
@@ -409,8 +410,8 @@ def collect_ora2_data(course_id, include_email=False):
     data_rows = []
     for row in data:
         raw_answer = row[raw_answer_index]
-        cleaned_answer = dumps(loads(raw_answer), ensure_ascii=False)
-        formatted_answer = extract_answer(loads(cleaned_answer))
+        cleaned_answer = json.dumps(json.loads(raw_answer), ensure_ascii=False)
+        formatted_answer = extract_answer(json.loads(cleaned_answer))
         data_rows.append(list(row) + [formatted_answer])
     return header, data_rows
 
