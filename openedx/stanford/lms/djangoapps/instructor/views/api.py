@@ -1,4 +1,5 @@
 import gzip
+import logging
 import re
 import StringIO
 import urllib2
@@ -34,6 +35,7 @@ EXTRA_INSTRUCTOR_POST_ENDPOINTS = {
     'get_student_responses',
     'graph_course_forums_usage',
 }
+LOG = logging.getLogger('stanford.celery.task')
 
 
 @require_POST
@@ -233,11 +235,16 @@ def graph_course_forums_usage(request, course_id):
                 url = settings.LMS_ROOT_URL + url
                 request = urllib2.Request(url)
                 request.add_header('Accept-encoding', 'gzip')
-                url_handle = urllib2.urlopen(request)
-                if url_handle.info().get('Content-Encoding') == 'gzip':
-                    file_buffer = StringIO.StringIO(url_handle.read())
-                    url_handle = gzip.GzipFile(fileobj=file_buffer)
-                graph = generate_course_forums_d3(url_handle)
+                LOG.error("URL IS: %s", url)
+                LOG.error("REQUEST IS: %s", request)
+                try:
+                    url_handle = urllib2.urlopen(request)
+                    if url_handle.info().get('Content-Encoding') == 'gzip':
+                        file_buffer = StringIO.StringIO(url_handle.read())
+                        url_handle = gzip.GzipFile(fileobj=file_buffer)
+                    graph = generate_course_forums_d3(url_handle)
+                except Exception as e:
+                    LOG.error("Exception: %s", e)
                 break
     if graph:
         response = JsonResponse({
