@@ -219,7 +219,6 @@ def _push_csv_responses_to_s3(csv_fn, filename, course_id, action_name):
     try:
         header, datarows = csv_fn(course_id)
         rows = [header] + [row for row in datarows]
-    # Update progress to failed regardless of error type
     except Exception as e:
         num_failed = 1
         TASK_LOG.error(e)
