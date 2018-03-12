@@ -14,7 +14,7 @@ In two separate processes on devstack:
 # We intentionally define lots of variables that aren't used, and
 # want to import all variables from base settings files
 # pylint: disable=wildcard-import, unused-wildcard-import
-from lms.envs.devstack import *
+from openedx.stanford.lms.envs.devstack import *
 
 # Require a separate celery worker
 CELERY_ALWAYS_EAGER = False
