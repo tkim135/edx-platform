@@ -2,6 +2,7 @@ from bson.son import SON
 from datetime import datetime
 from datetime import date
 from itertools import chain
+import logging
 from textwrap import dedent
 import urllib
 
@@ -23,8 +24,8 @@ from util.file import course_filename_prefix_generator
 from util.query import get_read_replica_cursor_if_available
 
 FORUMS_MONGO_PARAMS = settings.FORUM_MONGO_PARAMS
-FORUMS_MONGO_PARAMS = settings.FORUM_MONGO_PARAMS
 ORA2_ANSWER_PART_SEPARATOR = '\n-----\n'
+TASK_LOG = logging.getLogger('stanford.celery.task')
 
 
 def generate_student_forums_query(course_id):
