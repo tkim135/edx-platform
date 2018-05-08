@@ -13,8 +13,8 @@ from i18n import segment
 from path import Path
 from paver.easy import task, cmdopts, needs, sh
 import polib
-from .utils.cmd import django_cmd
-from .utils.stanford_i18n_helpers import fix_header, fix_metadata, segment_pofile_lazy
+from pavelib.utils.cmd import django_cmd
+from .utils.i18n_helpers import fix_header, fix_metadata, segment_pofile_lazy
 
 BASE_DIR = Path('.').abspath()
 CONFIG = Configuration(filename=BASE_DIR / 'conf/locale/stanford_config.yaml')
@@ -241,9 +241,9 @@ def stanfordi18n_transifex_push():
 
 @task
 @needs(
-    "pavelib.stanfordi18n.stanfordi18n_extract_theme",
-    "pavelib.stanfordi18n.stanfordi18n_extract_platform",
-    "pavelib.stanfordi18n.stanfordi18n_transifex_push",
+    "stanfordi18n_extract_theme",
+    "stanfordi18n_extract_platform",
+    "stanfordi18n_transifex_push",
 )
 def stanfordi18n_robot_push():
     """
