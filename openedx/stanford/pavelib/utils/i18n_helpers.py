@@ -10,10 +10,12 @@ import logging
 import polib
 
 
-LOG = logging.getLogger(__file__)
+LOG = logging.getLogger(__name__)
+
 
 def segment_pofile_lazy(filename, segments):
-    """Segment a .po file using patterns in `segments`.
+    """
+    Segment a .po file using patterns in `segments`.
 
     The .po file at `filename` is read, and the occurrence locations of its
     messages are examined.  `segments` is a list of single key-value pairs:
@@ -44,10 +46,8 @@ def segment_pofile_lazy(filename, segments):
         a set of path objects, all the segment files written.
 
     """
-    reading_msg = "Reading {num} entries from {file}"
-    writing_msg = "Writing {num} entries to {file}"
     source_po = polib.pofile(filename)
-    LOG.info(reading_msg.format(file=filename, num=len(source_po)))  # pylint: disable=logging-format-interpolation
+    LOG.info('Reading %s entries from %s', len(source_po), filename)
 
     # A new pofile just like the source, but with no messages. We'll put
     # anything not segmented into this file.
@@ -72,9 +72,9 @@ def segment_pofile_lazy(filename, segments):
         for pat, segment_file in segment_patterns:
             for occ_file, _ in msg.occurrences:
                 if fnmatch.fnmatch(occ_file, pat):
-                   segment_po_files[segment_file].append(msg)
-                   segment_match = True
-                   break
+                    segment_po_files[segment_file].append(msg)
+                    segment_match = True
+                    break
             if segment_match:
                 break
 
@@ -86,9 +86,9 @@ def segment_pofile_lazy(filename, segments):
     for segment_file, pofile in segment_po_files.items():
         out_file = filename.dirname() / segment_file
         if not pofile:
-            LOG.error("No messages to write to %s, did you run segment twice?", out_file)
+            LOG.error('No messages to write to %s, did you run segment twice?', out_file)
         else:
-            LOG.info(writing_msg.format(file=out_file, num=len(pofile)))  # pylint: disable=logging-format-interpolation
+            LOG.info('Writing %s entries to %s', len(pofile), out_file)
             pofile.save(out_file)
             files_written.add(out_file)
 
