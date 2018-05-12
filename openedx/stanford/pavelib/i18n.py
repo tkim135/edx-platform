@@ -17,7 +17,7 @@ from path import Path
 from paver.easy import task, cmdopts, needs, sh
 import polib
 from pavelib.utils.cmd import django_cmd
-from .utils.i18n_helpers import fix_header, fix_metadata, segment_pofile_lazy
+from .utils.i18n_helpers import fix_header, fix_metadata, get_theme_dir, segment_pofile_lazy
 
 BASE_DIR = Path('.').abspath()
 CONFIG = Configuration(filename=BASE_DIR / 'conf/locale/stanford_config.yaml')
@@ -98,7 +98,8 @@ def stanfordi18n_extract_theme(options):
     Extract strings that need translation.
     """
     files_to_clean = set()
-    babel_mako_cfg = '/edx/app/edxapp/themes/comprehensive/conf/locale/babel_mako.cfg'
+    theme_dir = get_theme_dir()
+    babel_mako_cfg = theme_dir / 'conf/locale/babel_mako.cfg'
     template_dir = 'lagunita/lms/templates/'
     theme_file = CONFIG.source_messages_dir / 'theme.po'
     babel_cmd_template = (
@@ -111,7 +112,7 @@ def stanfordi18n_extract_theme(options):
         output='../../edx-platform' / theme_file,
         template_dir=template_dir,
     )
-    execute(babel_mako_cmd, working_directory='/edx/app/edxapp/themes/comprehensive')
+    execute(babel_mako_cmd, working_directory=theme_dir)
     files_to_clean.add(theme_file)
 
     # Monkeypatch upstream function
@@ -262,8 +263,9 @@ def stanfordi18n_robot_pull():
     # generate merged theme django.po
     sh('i18n_tool generate -c conf/locale/stanford_config.yaml -v 1')
 
+    theme_dir = get_theme_dir()
     for lang in langs:
-        theme_messages_dir = Path('/edx/app/edxapp/themes/comprehensive/conf/locale/{lang}/LC_MESSAGES'.format(lang=lang))
+        theme_messages_dir = theme_dir / 'conf/locale/{lang}/LC_MESSAGES'.format(lang=lang)
         theme_messages_dir.makedirs_p()
         shutil.move(CONFIG.get_messages_dir(lang) / 'theme.po', theme_messages_dir / 'django.po')
         shutil.move(CONFIG.get_messages_dir(lang) / 'theme.mo', theme_messages_dir / 'django.mo')
@@ -272,5 +274,5 @@ def stanfordi18n_robot_pull():
 
     sh('git add conf/locale')
     sh('git add lms/static/js/i18n')
-    sp.check_call('git add conf/locale', cwd='/edx/app/edxapp/themes/comprehensive', shell=True)
+    sp.check_call('git add conf/locale', cwd=theme_dir, shell=True)
     print('Check updated translations files in platform and theme before committing')

@@ -6,11 +6,24 @@ from datetime import datetime
 import copy
 import fnmatch
 import logging
+import os
 
+import django
+from django.conf import settings
 import polib
 
-
 LOG = logging.getLogger(__name__)
+
+
+def get_theme_dir():
+    """
+    Fetch the absolute path to the default theme directory
+    """
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "openedx.stanford.lms.envs.aws")
+    os.environ.setdefault("SERVICE_VARIANT", 'lms')
+    django.setup()
+    from openedx.core.djangoapps.theming.helpers import get_theme_base_dir
+    return get_theme_base_dir(settings.DEFAULT_SITE_THEME)
 
 
 def segment_pofile_lazy(filename, segments):
