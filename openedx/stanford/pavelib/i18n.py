@@ -17,7 +17,13 @@ from path import Path
 from paver.easy import task, cmdopts, needs, sh
 import polib
 from pavelib.utils.cmd import django_cmd
-from .utils.i18n_helpers import fix_header, fix_metadata, get_theme_dir, segment_pofile_lazy
+from .utils.i18n_helpers import (
+    fix_header,
+    fix_metadata,
+    get_theme_dir,
+    segment_pofile_lazy,
+    merge_existing_translations,
+)
 
 BASE_DIR = Path('.').abspath()
 CONFIG = Configuration(filename=BASE_DIR / 'conf/locale/stanford_config.yaml')
@@ -138,100 +144,23 @@ def stanfordi18n_transifex_push():
     """
     Push source strings to Transifex for translation
     """
-    execute('tx push -s -r stanford-openedx.theme')
-    execute('tx push -s -r stanford-openedx.tos')
-    execute('tx push -s -r stanford-openedx.privacy')
-    execute('tx push -s -r stanford-openedx.honor')
-    execute('tx push -s -r stanford-openedx.copyright')
-    execute('tx push -s -r stanford-openedx.mako')
-    execute('tx push -s -r stanford-openedx.django')
-    execute('tx push -s -r stanford-openedx.djangojs')
-    execute('tx push -s -r stanford-openedx.underscore')
+    execute('tx push -s -r "stanford-openedx.*"')
     print('Pushed source files to Transifex')
 
     # merge in existing platform translations
     for lang in CONFIG.translated_locales:
         if not CONFIG.get_messages_dir(lang).exists():
             # Language not yet available in code, fetch from upstream Transifex
-            print('Fetch upstream translations for ' + lang)
+            print('Fetch upstream translations manually for ' + lang)
             break
-        common_platform_template = 'msgcomm {platform_file} {new_source} -o {output}'
-        mako_file = CONFIG.source_messages_dir / 'stanford_mako.po'
-        common_mako = CONFIG.get_messages_dir(lang) / 'common_mako.po'
-        common_mako_cmd = common_platform_template.format(
-            platform_file=CONFIG.get_messages_dir(lang) / 'django.po',
-            new_source=mako_file,
-            output=common_mako,
-        )
-        execute(common_mako_cmd)
 
-        msgmerge_template = 'msgmerge --no-fuzzy-matching {common_platform} {new_source} -o {output}'
-        msgmerge_cmd = msgmerge_template.format(
-            common_platform=common_mako,
-            new_source=mako_file,
-            output=CONFIG.get_messages_dir(lang) / 'stanford_mako.po'
-        )
-        execute(msgmerge_cmd)
-
-        push_cmd = 'tx push -t -l {lang} -r stanford-openedx.mako'.format(lang=lang)
-        execute(push_cmd)
-
-        django_file = CONFIG.source_messages_dir / 'stanford_django.po'
-        common_django = CONFIG.get_messages_dir(lang) / 'common_django.po'
-        common_django_cmd = common_platform_template.format(
-            platform_file=CONFIG.get_messages_dir(lang) / 'django.po',
-            new_source=django_file,
-            output=common_django,
-        )
-        execute(common_django_cmd)
-
-        msgmerge_cmd = msgmerge_template.format(
-            common_platform=common_django,
-            new_source=django_file,
-            output=CONFIG.get_messages_dir(lang) / 'stanford_django.po'
-        )
-        execute(msgmerge_cmd)
-
-        push_django = 'tx push -t -l {lang} -r stanford-openedx.django'.format(lang=lang)
-        execute(push_django)
-
-        djangojs_file = CONFIG.source_messages_dir / 'stanford_djangojs.po'
-        common_djangojs = CONFIG.get_messages_dir(lang) / 'common_djangojs.po'
-        common_djangojs_cmd = common_platform_template.format(
-            platform_file=CONFIG.get_messages_dir(lang) / 'djangojs.po',
-            new_source=djangojs_file,
-            output=common_djangojs,
-        )
-        execute(common_djangojs_cmd)
-
-        msgmerge_cmd = msgmerge_template.format(
-            common_platform=common_djangojs,
-            new_source=djangojs_file,
-            output=CONFIG.get_messages_dir(lang) / 'stanford_djangojs.po'
-        )
-        execute(msgmerge_cmd)
-
-        push_djangojs = 'tx push -t -l {lang} -r stanford-openedx.djangojs'.format(lang=lang)
-        execute(push_djangojs)
-
-        underscore_file = CONFIG.source_messages_dir / 'stanford_underscore.po'
-        common_underscore = CONFIG.get_messages_dir(lang) / 'common_underscore.po'
-        common_underscore_cmd = common_platform_template.format(
-            platform_file=CONFIG.get_messages_dir(lang) / 'djangojs.po',
-            new_source=underscore_file,
-            output=common_underscore,
-        )
-        execute(common_underscore_cmd)
-
-        msgmerge_cmd = msgmerge_template.format(
-            common_platform=common_underscore,
-            new_source=underscore_file,
-            output=CONFIG.get_messages_dir(lang) / 'stanford_underscore.po'
-        )
-        execute(msgmerge_cmd)
-
-        push_underscore = 'tx push -t -l {lang} -r stanford-openedx.underscore'.format(lang=lang)
-        execute(push_underscore)
+        merge_mappings = {
+            'django.po': ['django', 'mako'],
+            'djangojs.po': ['djangojs', 'underscore'],
+        }
+        for existing, targets in merge_mappings.items():
+            for target in targets:
+                merge_existing_translations(existing, target, lang)
 
 
 @task

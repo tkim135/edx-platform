@@ -10,6 +10,7 @@ import os
 
 import django
 from django.conf import settings
+from i18n.execute import execute
 import polib
 
 LOG = logging.getLogger(__name__)
@@ -148,3 +149,34 @@ def fix_metadata(pofile):
         'Language-Team': 'English',
     }
     pofile.metadata.update(fixes)
+
+
+def merge_existing_translations(existing, target, lang):
+    """
+    Merge translations from existing file to target file for locale lang and
+    push up to Transifex
+    """
+    from openedx.stanford.pavelib.i18n import CONFIG
+    target_filename = "stanford_" + target + '.po'
+
+    # Fetch common messages first
+    msgcomm_template = 'msgcomm {existing_file} {target_source} -o {output}'
+    target_source = CONFIG.source_messages_dir / target_filename
+    common_file = CONFIG.get_messages_dir(lang) / 'common.po'
+    msgcomm_cmd = msgcomm_template.format(
+        existing_file=CONFIG.get_messages_dir(lang) / existing,
+        target_source=target_source,
+        output=common_file,
+    )
+    execute(msgcomm_cmd)
+
+    msgmerge_template = 'msgmerge --no-fuzzy-matching {common_file} {target_source} -o {output}'
+    msgmerge_cmd = msgmerge_template.format(
+        common_file=common_file,
+        target_source=target_source,
+        output=CONFIG.get_messages_dir(lang) / target_filename,
+    )
+    execute(msgmerge_cmd)
+
+    push_cmd = 'tx push -t -l {lang} -r stanford-openedx.{resource}'.format(lang=lang, resource=target)
+    execute(push_cmd)
