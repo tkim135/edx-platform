@@ -7,12 +7,27 @@ import copy
 import fnmatch
 import logging
 import os
+from path import Path
+import shutil
+import subprocess
 
 import django
 from django.conf import settings
+from i18n import segment
+from i18n.config import Configuration
 from i18n.execute import execute
+from paver.easy import sh
 import polib
 
+from pavelib.utils.cmd import django_cmd
+
+BABEL_COMMAND_TEMPLATE = (
+    "pybabel extract --mapping={config} "
+    "--add-comments='Translators:' --keyword='interpolate' "
+    "--output={output} {template_directory}"
+)
+BASE_DIR = Path('.').abspath()
+CONFIG = Configuration(filename=BASE_DIR / 'conf/locale/stanford_config.yaml')
 LOG = logging.getLogger(__name__)
 
 
@@ -24,6 +39,108 @@ def clean_pofile(filename):
     pofile.save()
 
 
+def compile_js(language):
+    sh(django_cmd('lms', 'devstack', 'compilejsi18n', '-l', language))
+
+
+def _extract_babel(file_config, file_output, template_directory='.', working_directory='.'):
+    babel_command = BABEL_COMMAND_TEMPLATE.format(
+        config=file_config,
+        output=file_output,
+        template_directory=template_directory,
+    )
+    execute(babel_command, working_directory)
+    return file_output
+
+
+def extract_platform_mako():
+    mako_config = CONFIG.locale_dir / 'stanford_mako.cfg'
+    mako_file = CONFIG.source_messages_dir / 'stanford_mako.po'
+    output = _extract_babel(mako_config, mako_file)
+    return output
+
+
+def extract_platform_underscore():
+    underscore_config = CONFIG.locale_dir / 'stanford_underscore.cfg'
+    underscore_file = CONFIG.source_messages_dir / 'stanford_underscore.po'
+    output = _extract_babel(underscore_config, underscore_file)
+    return output
+
+
+def extract_platform_django(file_base='django'):
+    filename = CONFIG.source_messages_dir / file_base + '.po'
+    filename_backup = filename + '.backup'
+    filename_stanford = CONFIG.source_messages_dir / 'stanford_' + file_base + '.po'
+    os.rename(filename, filename_backup)
+    makemessages = 'django-admin.py makemessages -l en'
+    ignores = ' '.join([
+        '--ignore="{}/*"'.format(directory)
+        for directory in CONFIG.ignore_dirs
+    ])
+    if ignores:
+        makemessages += ' ' + ignores
+    if file_base == 'djangojs':
+        makemessages += ' -d djangojs'
+    execute(makemessages)
+    os.rename(filename, filename_stanford)
+    os.rename(filename_backup, filename)
+    return filename_stanford
+
+
+def extract_platform_djangojs():
+    output = extract_platform_django('djangojs')
+    return output
+
+
+def extract_theme_mako():
+    theme_dir = get_theme_dir()
+    template_directory = 'lagunita/lms/templates/'
+    theme_file = CONFIG.source_messages_dir / 'theme.po'
+    mako_config = theme_dir / 'conf/locale/babel_mako.cfg'
+    mako_file = '../../edx-platform' / theme_file
+    output = _extract_babel(
+        mako_config,
+        mako_file,
+        template_directory=template_directory,
+        working_directory=theme_dir,
+    )
+    return output
+
+
+def extract_theme_tos():
+    segment.segment_pofile = segment_pofile_lazy
+    files = segment.segment_pofiles(CONFIG, CONFIG.source_locale)
+    return files
+
+
+def fix_privacy(language):
+    LOG.info("Fixing privacy: %s...", language)
+    command = 'sed -i "/python-format/d" conf/locale/{language}/LC_MESSAGES/privacy.po'.format(
+        language=language,
+    )
+    sh(command)
+    LOG.info("Fixed privacy: %s.", language)
+
+
+def generate_merged_theme_django(languages):
+    sh('i18n_tool generate -c conf/locale/stanford_config.yaml -v 1')
+    theme_dir = get_theme_dir()
+    for language in languages:
+        theme_messages_dir = theme_dir / 'conf/locale/{language}/LC_MESSAGES'.format(
+            language=language,
+        )
+        theme_messages_dir.makedirs_p()
+        shutil.move(
+            CONFIG.get_messages_dir(language) / 'theme.po',
+            theme_messages_dir / 'django.po'
+        )
+        shutil.move(
+            CONFIG.get_messages_dir(language) / 'theme.mo',
+            theme_messages_dir / 'django.mo'
+        )
+        compile_js(language)
+
+
 def get_theme_dir():
     """
     Fetch the absolute path to the default theme directory
@@ -33,6 +150,20 @@ def get_theme_dir():
     django.setup()
     from openedx.core.djangoapps.theming.helpers import get_theme_base_dir
     return get_theme_base_dir(settings.DEFAULT_SITE_THEME)
+
+
+def git_add():
+    sh('git add conf/locale')
+    sh('git add lms/static/js/i18n')
+    subprocess.check_call(
+        'git add conf/locale',
+        cwd=get_theme_dir(),
+        shell=True,
+    )
+    LOG.info(
+        'Check updated translations files in platform '
+        'and theme before committing'
+    )
 
 
 def segment_pofile_lazy(filename, segments):
@@ -159,32 +290,74 @@ def fix_metadata(pofile):
     pofile.metadata.update(fixes)
 
 
-def merge_existing_translations(existing, target, lang):
-    """
-    Merge translations from existing file to target file for locale lang and
-    push up to Transifex
-    """
-    from openedx.stanford.pavelib.i18n import CONFIG
-    target_filename = "stanford_" + target + '.po'
+def merge_translations():
+    for language in CONFIG.translated_locales:
+        LOG.info("Merging language: %s...", language)
+        if not CONFIG.get_messages_dir(language).exists():
+            # Language not yet available in code, fetch from upstream Transifex
+            LOG.warn("Fetch upstream translations manually for %s", language)
+            break
+        merge_mappings = {
+            'django.po': ['django', 'mako'],
+            'djangojs.po': ['djangojs', 'underscore'],
+        }
+        for existing, targets in merge_mappings.items():
+            for target in targets:
+                _merge_existing_translations(existing, target, language)
+        LOG.info("Merged language: %s.", language)
 
-    # Fetch common messages first
-    msgcomm_template = 'msgcomm {existing_file} {target_source} -o {output}'
-    target_source = CONFIG.source_messages_dir / target_filename
-    common_file = CONFIG.get_messages_dir(lang) / 'common.po'
-    msgcomm_cmd = msgcomm_template.format(
-        existing_file=CONFIG.get_messages_dir(lang) / existing,
+
+def _merge_pull(target_source, common_file, language, existing):
+    existing_file = CONFIG.get_messages_dir(language) / existing
+    command = "msgcomm {existing_file} {target_source} -o {output}".format(
+        existing_file=existing_file,
         target_source=target_source,
         output=common_file,
     )
-    execute(msgcomm_cmd)
+    execute(command)
 
-    msgmerge_template = 'msgmerge --no-fuzzy-matching {common_file} {target_source} -o {output}'
-    msgmerge_cmd = msgmerge_template.format(
+
+def _merge_combine(target_source, target_filename, common_file, language):
+    output = CONFIG.get_messages_dir(language) / target_filename
+    command = "msgmerge --no-fuzzy-matching {common_file} {target_source} -o {output}".format(
         common_file=common_file,
         target_source=target_source,
-        output=CONFIG.get_messages_dir(lang) / target_filename,
+        output=output,
     )
-    execute(msgmerge_cmd)
+    execute(command)
 
-    push_cmd = 'tx push -t -l {lang} -r stanford-openedx.{resource}'.format(lang=lang, resource=target)
-    execute(push_cmd)
+
+def _merge_push(target, language):
+    command = "tx push -t -l {language} -r stanford-openedx.{target}".format(
+        language=language,
+        target=target,
+    )
+    execute(command)
+
+
+def _merge_existing_translations(existing, target, language):
+    """
+    Merge translations from existing file to target file for locale
+    language and push up to Transifex
+    """
+    target_filename = "stanford_" + target + '.po'
+    target_source = CONFIG.source_messages_dir / target_filename
+    common_file = CONFIG.get_messages_dir(language) / 'common.po'
+    _merge_pull(target_source, common_file, language, existing)
+    _merge_combine(target_source, target_filename, common_file, language)
+    _merge_push(target, language)
+
+
+def pull(language):
+    LOG.info("Pulling language: %s...", language)
+    command = 'tx pull -l {language} -r "stanford-openedx.*"'.format(
+        language=language,
+    )
+    execute(command)
+    LOG.info("Pulled language: %s.", language)
+
+
+def push():
+    LOG.info('Pushing source files to Transifex...')
+    execute('tx push -s -r "stanford-openedx.*"')
+    LOG.info('Pushed source files to Transifex.')
