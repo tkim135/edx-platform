@@ -16,6 +16,14 @@ import polib
 LOG = logging.getLogger(__name__)
 
 
+def clean_pofile(filename):
+    LOG.info("Cleaning %s", filename)
+    pofile = polib.pofile(filename)
+    fix_header(pofile)
+    fix_metadata(pofile)
+    pofile.save()
+
+
 def get_theme_dir():
     """
     Fetch the absolute path to the default theme directory

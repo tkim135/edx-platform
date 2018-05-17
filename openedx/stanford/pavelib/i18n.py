@@ -18,8 +18,7 @@ from paver.easy import task, cmdopts, needs, sh
 import polib
 from pavelib.utils.cmd import django_cmd
 from .utils.i18n_helpers import (
-    fix_header,
-    fix_metadata,
+    clean_pofile,
     get_theme_dir,
     segment_pofile_lazy,
     merge_existing_translations,
@@ -85,12 +84,7 @@ def stanfordi18n_extract_platform():
     files_to_clean.add(djangojs_file)
 
     for filename in files_to_clean:
-        LOG.info('Cleaning %s', filename)
-        pofile = polib.pofile(filename)
-        fix_header(pofile)
-        fix_metadata(pofile)
-        pofile.save()
-
+        clean_pofile(filename)
     os.rename(CONFIG.source_messages_dir / 'django-saved.po', CONFIG.source_messages_dir / 'django.po')
     os.rename(CONFIG.source_messages_dir / 'djangojs-saved.po', CONFIG.source_messages_dir / 'djangojs.po')
 
@@ -129,12 +123,7 @@ def stanfordi18n_extract_theme(options):
     files_to_clean.update(segmented_tos)
 
     for filename in files_to_clean:
-        LOG.info('Cleaning %s', filename)
-        pofile = polib.pofile(filename)
-        fix_header(pofile)
-        fix_metadata(pofile)
-        pofile.save()
-
+        clean_pofile(filename)
     print('Done extracting theme')
 
 
