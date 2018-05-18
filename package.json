@@ -6,7 +6,7 @@
     "backbone.paginator": "~2.0.3",
     "backbone-validation": "~0.11.5",
     "coffee-script": "1.6.1",
-    "edx-pattern-library": "git://github.com/Stanford-Online/ux-pattern-library.git#master",
+    "edx-pattern-library": "git://github.com/Stanford-Online/ux-pattern-library.git#v0.18.1-stanford",
     "edx-ui-toolkit": "1.5.1",
     "jquery": "~2.2.0",
     "jquery-migrate": "^1.4.1",
