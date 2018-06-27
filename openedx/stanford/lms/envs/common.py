@@ -115,6 +115,7 @@ STUDENT_RESPONSES_REPORT_SUPPORTED_TYPES = {
     'problem',
     'submit-and-compare',
     'freetextresponse',
+    'problem-builder',
 }
 TEMPLATE_VISIBLE_SETTINGS = [
     # These settings' values will be exposed to all templates

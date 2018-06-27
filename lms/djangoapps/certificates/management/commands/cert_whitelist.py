@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 Management command which sets or gets the certificate whitelist for a given
 user/course
@@ -108,8 +109,12 @@ class Command(BaseCommand):
                     update_user_whitelist(username, add=add_to_whitelist)
 
         whitelist = CertificateWhitelist.objects.filter(course_id=course)
-        wl_users = '\n'.join(
-            "{u.user.username} {u.user.email} {u.whitelist}".format(u=u)
-            for u in whitelist
+        print(
+            u"User whitelist for course {0}:".format(course_id)
         )
-        print("User whitelist for course {0}:\n{1}".format(course_id, wl_users))
+        for whitelisted in whitelist:
+            username = whitelisted.user.username
+            username = username.encode('utf-8')
+            email = whitelisted.user.email
+            is_whitelisted = whitelisted.whitelist
+            print(username, email, is_whitelisted)
