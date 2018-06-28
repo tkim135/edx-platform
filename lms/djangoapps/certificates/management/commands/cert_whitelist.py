@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 """
 Management command which sets or gets the certificate whitelist for a given
 user/course
@@ -114,7 +113,6 @@ class Command(BaseCommand):
         )
         for whitelisted in whitelist:
             username = whitelisted.user.username
-            username = username.encode('utf-8')
             email = whitelisted.user.email
             is_whitelisted = whitelisted.whitelist
             print(username, email, is_whitelisted)
