@@ -67,6 +67,7 @@ INLINE_ANALYTICS_SUPPORTED_TYPES = {
 }
 INSTALLED_APPS += (
     'branding_stanford',
+    'openedx.stanford.djangoapps.student_utils',
     'openedx.stanford.lms.djangoapps.instructor',
     'openedx.stanford.lms.djangoapps.instructor_task',
     'settings_context_processor',
