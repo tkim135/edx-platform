@@ -59,14 +59,8 @@ jobs:
     - save_cache:
         key: v1-dep-{{ .Branch }}-{{ epoch }}
         paths:
-        - vendor/bundle
         - ~/virtualenvs
-        - ~/.m2
-        - ~/.ivy2
-        - ~/.bundle
-        - ~/.go_workspace
-        - ~/.gradle
-        - ~/.cache/bower
+        - ~/.cache/pip
         - ./node_modules
     # Test
     #   This would typically be a build job when using workflows, possibly combined with build
