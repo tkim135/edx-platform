@@ -39,6 +39,7 @@ jobs:
     - run: sudo apt-get install build-essential libssl-dev libffi-dev python-dev
     - run: sudo apt-get install libpq-dev python-dev libxml2-dev libxslt1-dev libldap2-dev libsasl2-dev libffi-dev
     - run: sudo apt-get install gcc
+    - run: sudo C_INCLUDE_PATH=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/usr/include/libxml2:/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/usr/include/libxml2/libxml:/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/usr/include pip install -r lxml
     # This is based on your 1.0 configuration file or project settings
     - run: npm install
     - run: virtualenv ~/virtualenvs/edxapp
