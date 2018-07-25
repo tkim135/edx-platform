@@ -54,9 +54,7 @@ jobs:
     - run: sudo apt-get install libxmlsec1-dev
     - run: sudo apt-get install lynx-cur
     # This is based on your 1.0 configuration file or project settings
-    - run:
-        working_directory: ~/Stanford-Online/edx-platform
-        command: pip install virtualenv && pip install nose && pip install pep8
+    - run: pip install virtualenv
     # This is based on your 1.0 configuration file or project settings
     - run: npm install
     - run: pip install setuptools
