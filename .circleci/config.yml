@@ -45,7 +45,7 @@ jobs:
     - run: pip install --exists-action w -r requirements/edx/pre.txt
     - run: pip install --exists-action w -r requirements/edx/github.txt
     - run: pip install --exists-action w -r requirements/edx/local.txt
-    - run: pip install  --exists-action w pbr==0.9.0
+    - run: pip install --exists-action w pbr==0.9.0
     - save_cache:
         key: v1-dep-{{ .Branch }}-{{ epoch }}
         paths:
