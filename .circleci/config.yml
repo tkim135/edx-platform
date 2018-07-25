@@ -54,6 +54,8 @@ jobs:
     - run: sudo apt-get install lynx-cur
     # This is based on your 1.0 configuration file or project settings
     - run: npm install
+    - run: virtualenv ~/virtualenvs/edxapp
+    - run: echo 'source ~/virtualenvs/edxapp/bin/activate' >> $BASH_ENV
     - run: pip install setuptools
     - run: pip install --exists-action w -r requirements/edx/paver.txt
     - run: pip install --exists-action w -r requirements/edx/pre.txt
