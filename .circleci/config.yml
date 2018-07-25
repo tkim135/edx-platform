@@ -41,7 +41,7 @@ jobs:
     # This is based on your 1.0 configuration file or project settings
     - run:
         working_directory: ~/Stanford-Online/edx-platform
-        command: if ["2.7.10" == "system"] || pyenv versions --bare | grep -x -q '2.7.10'; then pyenv global version;else pyenv install --skip-existing  2.7.10 && pyenv global version && pyenv rehash && pip install virtualenv && pip install nose && pip install pep8 && pyenv rehash;fi
+        command: pip install virtualenv && pip install nose && pip install pep8
     # Dependencies
     #   This would typically go in either a build or a build-and-test job when using workflows
     # Restore the dependency cache
