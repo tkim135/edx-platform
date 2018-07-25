@@ -35,6 +35,7 @@ jobs:
     - run: sudo apt-get update
     - run: sudo apt-get install libxmlsec1-dev
     - run: sudo apt-get install lynx-cur
+    - run: sudo apt-get install build-essential libssl-dev libffi-dev python-dev
     # This is based on your 1.0 configuration file or project settings
     - run: npm install
     - run: virtualenv ~/virtualenvs/edxapp
