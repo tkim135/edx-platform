@@ -45,6 +45,12 @@ jobs:
     - run: pip install --exists-action w -r requirements/edx/github.txt
     - run: pip install --exists-action w -r requirements/edx/local.txt
     - run: pip install  --exists-action w pbr==0.9.0
+    - save_cache:
+        key: v1-dep-{{ .Branch }}-{{ epoch }}
+        paths:
+        - ~/virtualenvs
+        - ~/.cache/pip
+        - ./node_modules
     - run: pip install --exists-action w -r requirements/edx/base.txt
     - run: pip install --exists-action w -r requirements/edx/paver.txt
     - run: if [ -e requirements/edx/post.txt ]; then pip install --exists-action w -r requirements/edx/post.txt ; fi
