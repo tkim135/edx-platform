@@ -53,8 +53,6 @@ jobs:
     - run: sudo apt-get install libxmlsec1-dev
     - run: sudo apt-get install lynx-cur
     # This is based on your 1.0 configuration file or project settings
-    - run: pip install virtualenv && pip install nose && pip install pep8
-    # This is based on your 1.0 configuration file or project settings
     - run: npm install
     - run: pip install setuptools
     - run: pip install --exists-action w -r requirements/edx/paver.txt
