@@ -36,18 +36,16 @@ jobs:
     - run: sudo apt-get upgrade
     - run: sudo apt-get install libxmlsec1-dev
     - run: sudo apt-get install lynx-cur
-    # - run: sudo pip install --upgrade setuptools
     - run: sudo apt-get install build-essential libssl-dev libffi-dev python-dev
     - run: sudo apt-get install libpq-dev python-dev libxml2-dev libxslt1-dev zlib1g-dev libldap2-dev libsasl2-dev libffi-dev
     - run: sudo apt-get install gcc
     - run: sudo apt-get install python-lxml
-    # - run: sudo apt-get install libgeos-dev
-    - run: sudo pip install --upgrade setuptools
+    - run: sudo apt-get install libgeos-dev
     # This is based on your 1.0 configuration file or project settings
     - run: npm install
     - run: virtualenv ~/virtualenvs/edxapp
     - run: echo 'source ~/virtualenvs/edxapp/bin/activate' >> $BASH_ENV
-    - run: pip install setuptools
+    - run: pip install --upgrade setuptools
     - run: pip install --exists-action w -r requirements/edx/paver.txt
     - run: pip install --exists-action w -r requirements/edx/pre.txt
     - run: pip install --exists-action w -r requirements/edx/github.txt
