@@ -41,6 +41,7 @@ jobs:
     - run: sudo apt-get install libpq-dev python-dev libxml2-dev libxslt1-dev zlib1g-dev libldap2-dev libsasl2-dev libffi-dev
     - run: sudo apt-get install gcc
     - run: sudo apt-get install python-lxml
+    - run: sudo apt-get install libgeos-dev
     # This is based on your 1.0 configuration file or project settings
     - run: npm install
     - run: virtualenv ~/virtualenvs/edxapp
