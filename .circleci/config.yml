@@ -41,6 +41,7 @@ jobs:
     - run: sudo apt-get install gcc
     - run: sudo apt-get install python-lxml
     - run: sudo apt-get install libgeos-dev
+    - run: sudo pip install pyOpenSSL==16.2.0
     # This is based on your 1.0 configuration file or project settings
     - run: npm install
     - run: virtualenv ~/virtualenvs/edxapp
