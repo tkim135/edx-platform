@@ -31,8 +31,12 @@ jobs:
         - v1-dep-master-
         # Any branch if there are none on the default branch - this should be unnecessary if you have your default branch configured correctly
         - v1-dep-
+    # Set up mongo
+    - run: sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 9DA31620334BD75D9DCB49F368818C72E52529D4
+    - run: echo "deb [ arch=amd64 ] https://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/4.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.0.list
     # This is based on your 1.0 configuration file or project settings
     - run: sudo apt-get update
+    - run: sudo apt-get install -y mongodb-org
     - run: sudo apt-get upgrade
     - run: sudo apt-get install libxmlsec1-dev
     - run: sudo apt-get install lynx-cur
@@ -41,7 +45,6 @@ jobs:
     - run: sudo apt-get install gcc
     - run: sudo apt-get install python-lxml
     - run: sudo apt-get install libgeos-dev
-    - run: sudo apt-get install -y mongodb-org
     # This is based on your 1.0 configuration file or project settings
     - run: npm install
     - run: virtualenv ~/virtualenvs/edxapp
