@@ -72,7 +72,7 @@ jobs:
     # Fix mongo connection
     # - run: sudo rm /edx/var/mongo/mongodb/mongod.lock
     # - run: sudo mongod -repair --config /etc/mongod.conf
-    # - run: sudo chown -R mongodb:mongodb /edx/var/mongo/
+    - run: sudo chown -R mongodb:mongodb /edx/var/mongo/
     - run: sudo service mongod start
     - save_cache:
         key: v1-dep-{{ .Branch }}-{{ epoch }}
