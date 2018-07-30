@@ -34,6 +34,7 @@ jobs:
     # Set up mongo
     # This is based on your 1.0 configuration file or project settings
     - run: sudo apt-get update
+    - run: sudo apt-get update --fix-missing
     - run: sudo apt-get upgrade
     # - run: sudo apt-get install libcurl3 openssl
     - run: sudo apt-get install -y mongodb
