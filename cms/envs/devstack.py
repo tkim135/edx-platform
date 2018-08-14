@@ -13,6 +13,7 @@ MEDIA_ROOT = "/edx/var/edxapp/uploads"
 DEBUG = True
 USE_I18N = True
 DEFAULT_TEMPLATE_ENGINE['OPTIONS']['debug'] = DEBUG
+SITE_NAME = 'localhost:8001'
 HTTPS = 'off'
 
 ################################ LOGGERS ######################################
