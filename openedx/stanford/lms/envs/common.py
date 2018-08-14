@@ -73,6 +73,8 @@ INSTALLED_APPS += (
     'sneakpeek_deeplink',
     # Added here to allow translations
     'freetextresponse',
+    'submit_and_compare',
+    'inline_dropdown',
 )
 MAKO_TEMPLATES['main'] += glob(STANFORD_ROOT / 'djangoapps/*/templates')
 MAKO_TEMPLATES['main'] += glob(STANFORD_ROOT / 'common/djangoapps/*/templates')
