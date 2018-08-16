@@ -1,0 +1,101 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/Stanford-Online/edx-platform
+    parallelism: 4
+    shell: /bin/bash --login
+    environment:
+      CIRCLE_ARTIFACTS: /tmp/circleci-artifacts
+      CIRCLE_TEST_REPORTS: /tmp/circleci-test-results
+    # To see the list of pre-built images that CircleCI provides for most common languages see
+    # https://circleci.com/docs/2.0/circleci-images/
+    docker:
+    - image: 'circleci/python:2.7-stretch-node-browsers'
+    steps:
+    # Machine Setup
+    #   If you break your build into multiple jobs with workflows, you will probably want to do the parts of this that are relevant in each
+    # The following `checkout` command checks out your code to your working directory. In 1.0 we did this implicitly. In 2.0 you can choose where in the course of a job your code should be checked out.
+    - checkout
+    # Prepare for artifact and test results  collection equivalent to how it was done on 1.0.
+    # In many cases you can simplify this from what is generated here.
+    # 'See docs on artifact collection here https://circleci.com/docs/2.0/artifacts/'
+    - run: mkdir -p $CIRCLE_ARTIFACTS $CIRCLE_TEST_REPORTS
+    # Dependencies
+    #   This would typically go in either a build or a build-and-test job when using workflows
+    # Restore the dependency cache
+    - restore_cache:
+        keys:
+        # This branch if available
+        - v1-dep-{{ .Branch }}-
+        # Default branch if not
+        - v1-dep-master-
+        # Any branch if there are none on the default branch - this should be unnecessary if you have your default branch configured correctly
+        - v1-dep-
+    # Set up mongo
+    # This is based on your 1.0 configuration file or project settings
+    - run: sudo apt-get update
+    - run: sudo apt-get upgrade
+    # - run: sudo apt-get install libcurl3 openssl
+    - run: sudo apt-get install -y mongodb
+    - run: sudo apt-get install libxmlsec1-dev
+    - run: sudo apt-get install lynx-cur
+    - run: sudo apt-get install build-essential libssl1.0-dev libffi-dev python-dev
+    - run: sudo apt-get clean
+    - run: sudo apt-get --reinstall install libssl1.0.0
+    - run: sudo apt-get install libgeos-dev
+    # This is based on your 1.0 configuration file or project settings
+    - run: npm install
+    - run: virtualenv ~/virtualenvs/edxapp
+    - run: echo 'source ~/virtualenvs/edxapp/bin/activate' >> $BASH_ENV
+    - run: pip install --exists-action w -r requirements/edx/paver.txt
+    - run: pip install --exists-action w -r requirements/edx/pre.txt
+    - run: pip install --exists-action w -r requirements/edx/github.txt
+    - run: pip install --exists-action w -r requirements/edx/local.txt
+    - run: pip install --exists-action w pbr==0.9.0
+    - save_cache:
+        key: v1-dep-{{ .Branch }}-{{ epoch }}
+        paths:
+        - ~/virtualenvs
+        - ~/.cache/pip
+        - ./node_modules
+    - run: pip install --exists-action w -r requirements/edx/base.txt
+    - run: pip install --exists-action w -r requirements/edx/paver.txt
+    - run: if [ -e requirements/edx/post.txt ]; then pip install --exists-action w -r requirements/edx/post.txt ; fi
+    - run: pip install coveralls==1.0
+    - run: pip freeze
+    # Fix mongo connection
+    - run: sudo service mongodb start
+    - save_cache:
+        key: v1-dep-{{ .Branch }}-{{ epoch }}
+        paths:
+        - ~/virtualenvs
+        - ~/.cache/pip
+        - ./node_modules
+    # Test
+    #   This would typically be a build job when using workflows, possibly combined with build
+    # This is based on your 1.0 configuration file or project settings
+    - run:
+        command: ./scripts/all-tests.sh
+        no_output_timeout: 900s
+    # This is based on your 1.0 configuration file or project settings
+    - run:
+        name: mkdir -p $CIRCLE_TEST_REPORTS/junit
+        command: if [ "$CIRCLE_NODE_INDEX" == "0" ]; then mkdir -p $CIRCLE_TEST_REPORTS/junit; fi
+    - run: if [ $(find reports -type f | wc -l) -gt 0 ] ; then cp -r reports/. $CIRCLE_TEST_REPORTS/junit ; fi
+    - run:
+        name: if [ -z $COVERALLS_REPO_TOKEN ]; then echo "Coveralls token not defined."; else coveralls; fi
+        command: if [ "$CIRCLE_NODE_INDEX" == "0" ]; then if [ -z $COVERALLS_REPO_TOKEN ]; then echo "Coveralls token not defined."; else coveralls; fi; fi
+    # Teardown
+    #   If you break your build into multiple jobs with workflows, you will probably want to do the parts of this that are relevant in each
+    # Save test results
+    - store_test_results:
+        path: /tmp/circleci-test-results
+    # Save artifacts
+    - store_artifacts:
+        path: /tmp/circleci-artifacts
+    - store_artifacts:
+        path: reports
+    - store_artifacts:
+        path: test_root/log
+    - store_artifacts:
+        path: /tmp/circleci-test-results
