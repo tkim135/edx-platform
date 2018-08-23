@@ -67,12 +67,16 @@ INLINE_ANALYTICS_SUPPORTED_TYPES = {
 }
 INSTALLED_APPS += (
     'branding_stanford',
+    'openedx.stanford.djangoapps.student_utils',
     'openedx.stanford.lms.djangoapps.instructor',
     'openedx.stanford.lms.djangoapps.instructor_task',
     'settings_context_processor',
     'sneakpeek_deeplink',
     # Added here to allow translations
     'freetextresponse',
+    'submit_and_compare',
+    'inline_dropdown',
+    'xblockmufi',
 )
 MAKO_TEMPLATES['main'] += glob(STANFORD_ROOT / 'djangoapps/*/templates')
 MAKO_TEMPLATES['main'] += glob(STANFORD_ROOT / 'common/djangoapps/*/templates')
