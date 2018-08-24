@@ -273,7 +273,15 @@ class ModuleStoreSerializer(object):
                 log.info("skipping dumping %s, since it hasn't changed", course_key)
                 continue
 
-            nodes, relationships = self.serialize_course(course_key)
+            try:
+                nodes, relationships = self.serialize_course(course_key)
+            except ValueError as error:
+                log.info(
+                    "skipping dumping %s due to encounter with %s",
+                    course_key,
+                    error,
+                )
+                continue
             log.info(
                 "%d nodes and %d relationships in %s",
                 len(nodes),
