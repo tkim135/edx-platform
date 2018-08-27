@@ -1,6 +1,8 @@
 """
 API to update user enrollments
 """
+import json
+
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
@@ -22,8 +24,39 @@ from lms.djangoapps.instructor.enrollment import (
 from openedx.core.djangoapps.cors_csrf.decorators import ensure_csrf_cookie_cross_domain
 from openedx.core.djangoapps.user_api.helpers import require_post_params
 from openedx.core.lib.api.permissions import ApiKeyHeaderPermission
+from openedx.core.lib.api.permissions import ApiKeyHeaderPermissionIsAuthenticated
 from student.auth import user_has_role
 from student.roles import CourseStaffRole
+from enrollment.views import ApiKeyPermissionMixIn
+from openedx.stanford.common.djangoapps.enrollment.data import get_roster
+
+
+class EnrollmentCourseRosterView(APIView, ApiKeyPermissionMixIn):
+    """
+    Read roster for a particular course. (contains PII)
+    """
+    authentication_classes = OAuth2Authentication,
+    permission_classes = ApiKeyHeaderPermissionIsAuthenticated,
+
+    @method_decorator(ensure_csrf_cookie_cross_domain)
+    def get(self, request, course_id=None):
+        """
+        HTTP endpoint for retrieving roster
+        """
+        try:
+            course_key = CourseKey.from_string(course_id)
+        except InvalidKeyError:
+            return Response(
+                status=status.HTTP_400_BAD_REQUEST,
+                data={"message": u"Invalid or missing course_id"},
+            )
+        if not user_has_role(request.user, CourseStaffRole(course_key)):
+            return Response(
+                status=status.HTTP_403_FORBIDDEN,
+                data={"message": u"User does not have permission to view roster for [{course_id}].".format(course_id=course_id)},
+            )
+        roster = get_roster(course_id)
+        return Response(data=json.dumps({'roster': roster}))
 
 
 class EnrollmentStatusView(APIView):
