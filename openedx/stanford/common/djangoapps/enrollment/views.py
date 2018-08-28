@@ -31,7 +31,20 @@ from enrollment.views import ApiKeyPermissionMixIn
 from openedx.stanford.common.djangoapps.enrollment.data import get_roster
 
 
-class EnrollmentCourseRosterView(APIView, ApiKeyPermissionMixIn):
+def _enroll(course_key, email, auto_enroll, email_students, email_params, language):
+    enroll_email(
+        course_key, email, auto_enroll, email_students, email_params, language=language
+    )
+    return Response(status=status.HTTP_204_NO_CONTENT)
+
+def _unenroll(course_key, email, email_students, email_params, language):
+    unenroll_email(
+        course_key, email, email_students, email_params, language=language
+    )
+    return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class EnrollmentRosterView(APIView, ApiKeyPermissionMixIn):
     """
     Read roster for a particular course. (contains PII)
     """
@@ -41,14 +54,20 @@ class EnrollmentCourseRosterView(APIView, ApiKeyPermissionMixIn):
     @method_decorator(ensure_csrf_cookie_cross_domain)
     def get(self, request, course_id=None):
         """
-        HTTP endpoint for retrieving roster
+        List a course's enrollment roster; requires staff access
+
+        **Example Request**
+            GET /api/enrollment/v1/roster/course-v1:foo+bar+foobar
+            { }
         """
         try:
             course_key = CourseKey.from_string(course_id)
         except InvalidKeyError:
             return Response(
                 status=status.HTTP_400_BAD_REQUEST,
-                data={"message": u"Invalid or missing course_id"},
+                data={
+                    'message': u'Invalid or missing course_id',
+                },
             )
         if not user_has_role(request.user, CourseStaffRole(course_key)):
             return Response(
@@ -58,33 +77,45 @@ class EnrollmentCourseRosterView(APIView, ApiKeyPermissionMixIn):
         roster = get_roster(course_id)
         return Response(data=json.dumps({'roster': roster}))
 
-
-class EnrollmentStatusView(APIView):
-    """
-    Update user enrollment for a particular course.
-    """
-    authentication_classes = OAuth2Authentication,
-    permission_classes = (ApiKeyHeaderPermission,)
-
-    @method_decorator(require_post_params(['email', 'course_id', 'action']))
     @method_decorator(ensure_csrf_cookie_cross_domain)
-    def post(self, request):
+    def post(self, request, course_id):
         """
-        Endpoint to update a user enrollment in a course. Requires staff access.
+        Enroll/unenroll a user in a course; requires staff access
 
         **Example Request**
-
-            POST /api/enrollment/v1/status
+            POST /api/enrollment/v1/roster/course-v1:foo+bar+foobar
             {
                 'email': 'foo@bar.com',
-                'course_id': 'course-v1:foo+bar+foobar',
                 'action': 'enroll',
                 'email_students': false,
                 'auto_enroll': true
             }
         """
+        action = request.data.get('action')
+        if action == 'enroll':
+            return self.put(request, course_id)
+        if action == 'unenroll':
+            return self.delete(request, course_id)
+        return Response(
+            status=status.HTTP_400_BAD_REQUEST,
+            data={
+                'message': u'Unrecognized action',
+            },
+        )
+
+    def put(self, request, course_id):
+        """
+        Enroll a user in a course; requires staff access
+
+        **Example Request**
+            PUT /api/enrollment/v1/roster/course-v1:foo+bar+foobar
+            {
+                'email': 'foo@bar.com',
+                'email_students': false,
+                'auto_enroll': true
+            }
+        """
         try:
-            course_id = request.data['course_id']
             course_key = CourseKey.from_string(course_id)
         except InvalidKeyError:
             return Response(
@@ -102,7 +133,7 @@ class EnrollmentStatusView(APIView):
                     ),
                 },
             )
-        email = request.data['email']
+        email = request.data.get('email')
         try:
             validate_email(email)
         except ValidationError:
@@ -112,9 +143,8 @@ class EnrollmentStatusView(APIView):
                     'message': u'Invalid email address',
                 },
             )
-        action = request.data['action']
-        email_students = request.POST.get('email_students', False) in ['true', 'True', True]
-        auto_enroll = request.POST.get('auto_enroll', False) in ['true', 'True', True]
+        email_students = request.data.get('email_students', False) in ['true', 'True', True]
+        auto_enroll = request.data.get('auto_enroll', False) in ['true', 'True', True]
         email_params = {}
         language = None
         if email_students:
@@ -123,20 +153,56 @@ class EnrollmentStatusView(APIView):
             if User.objects.filter(email=email).exists():
                 user = User.objects.get(email=email)
                 language = get_user_email_language(user)
-        if action == 'enroll':
-            enroll_email(
-                course_key, email, auto_enroll, email_students, email_params, language=language
-            )
-            return Response(status=status.HTTP_204_NO_CONTENT)
-        elif action == 'unenroll':
-            unenroll_email(
-                course_key, email, email_students, email_params, language=language
-            )
-            return Response(status=status.HTTP_204_NO_CONTENT)
-        else:
+        return _enroll(course_key, email, auto_enroll, email_students, email_params, language)
+
+    def delete(self, request, course_id):
+        """
+        Unenroll a user from a course; requires staff access
+
+        **Example Request**
+            DELETE /api/enrollment/v1/roster/course-v1:foo+bar+foobar
+            {
+                'email': 'foo@bar.com',
+                'email_students': false,
+                'auto_enroll': true
+            }
+        """
+        try:
+            course_key = CourseKey.from_string(course_id)
+        except InvalidKeyError:
             return Response(
                 status=status.HTTP_400_BAD_REQUEST,
                 data={
-                    'message': u'Unrecognized action',
+                    'message': u'Invalid or missing course_id',
                 },
             )
+        if not user_has_role(request.user, CourseStaffRole(course_key)):
+            return Response(
+                status=status.HTTP_403_FORBIDDEN,
+                data={
+                    'message': u'User does not have permission to update enrollment for [{course_id}].'.format(
+                        course_id=course_id,
+                    ),
+                },
+            )
+        email = request.data.get('email')
+        try:
+            validate_email(email)
+        except ValidationError:
+            return Response(
+                status=status.HTTP_400_BAD_REQUEST,
+                data={
+                    'message': u'Invalid email address',
+                },
+            )
+        email_students = request.data.get('email_students', False) in ['true', 'True', True]
+        auto_enroll = request.data.get('auto_enroll', False) in ['true', 'True', True]
+        email_params = {}
+        language = None
+        if email_students:
+            course = get_course_by_id(course_key)
+            email_params = get_email_params(course, auto_enroll)
+            if User.objects.filter(email=email).exists():
+                user = User.objects.get(email=email)
+                language = get_user_email_language(user)
+        return _unenroll(course_key, email, email_students, email_params, language)
