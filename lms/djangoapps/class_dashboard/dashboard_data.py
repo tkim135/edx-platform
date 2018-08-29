@@ -15,7 +15,7 @@ from xmodule.modulestore.inheritance import own_metadata
 from instructor_analytics.csvs import create_csv_response
 from analyticsclient.client import Client
 from analyticsclient.exceptions import NotFoundError
-from student.models import CourseAccessRole
+from student.models import CourseAccessRole, CourseEnrollment
 from opaque_keys.edx import locator
 from opaque_keys.edx.locations import SlashSeparatedCourseKey
 
@@ -41,6 +41,23 @@ def get_non_student_list(course_key):
 
     return [non_student['user_id'] for non_student in non_students]
 
+def get_anon_list(course_key):
+    """
+    Find all user_ids for anonymous users
+    """
+    anon_students = CourseEnrollment.objects.select_related(
+        'user'
+    ).filter(
+        course_id=course_key,
+        user__username__startswith='anon__'
+    ).values(
+        'user__id'
+    )
+
+    return [anon_student['user__id'] for anon_student in anon_students]
+
+def get_all_non_students(course_key):
+    return get_non_student_list(course_key) + get_anon_list(course_key)
 
 def get_problem_grade_distribution(course_id, enrollment):
     """
@@ -57,7 +74,7 @@ def get_problem_grade_distribution(course_id, enrollment):
       'total_student_count' where the key is problem 'module_id' and the value is number of students
         attempting the problem
     """
-    non_student_list = get_non_student_list(course_id)
+    non_student_list = get_all_non_students(course_id)
 
     prob_grade_distrib = {}
     total_student_count = defaultdict(int)
@@ -141,7 +158,7 @@ def get_sequential_open_distrib(course_id, enrollment):
     """
     sequential_open_distrib = {}
 
-    non_student_list = get_non_student_list(course_id)
+    non_student_list = get_all_non_students(course_id)
 
     if enrollment <= settings.MAX_ENROLLEES_FOR_METRICS_USING_DB or not settings.ANALYTICS_DATA_URL:
         # Aggregate query on studentmodule table for "opening a subsection" data
@@ -191,7 +208,7 @@ def get_problem_set_grade_distrib(course_id, problem_set, enrollment):
       'grade_distrib' - array of tuples (`grade`,`count`) ordered by `grade`
     """
 
-    non_student_list = get_non_student_list(course_id)
+    non_student_list = get_all_non_students(course_id)
 
     prob_grade_distrib = {}
 
@@ -605,7 +622,7 @@ def get_students_opened_subsection(request, csv=False):
     course_key = SlashSeparatedCourseKey.from_deprecated_string(course_id)
     module_state_key = course_key.make_usage_key_from_deprecated_string(request.GET.get('module_id'))
 
-    non_student_list = get_non_student_list(course_key)
+    non_student_list = get_all_non_students(course_key)
 
     # Query for "opened a subsection" students
     students = models.StudentModule.objects.select_related('student').filter(
@@ -660,7 +677,7 @@ def get_students_problem_grades(request, csv=False):
     course_key = SlashSeparatedCourseKey.from_deprecated_string(course_id)
     module_state_key = course_key.make_usage_key_from_deprecated_string(request.GET.get('module_id'))
 
-    non_student_list = get_non_student_list(course_key)
+    non_student_list = get_all_non_students(course_key)
 
     # Query for "problem grades" students
     students = models.StudentModule.objects.select_related('student').filter(
